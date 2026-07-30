@@ -8,6 +8,8 @@ import com.pulse_gym.lb_common.enums.EnumTipoAcceso;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,6 +38,7 @@ public class EventoAcceso {
     /**
      * Tipo de acceso a la asistencia, web, biometrico, etc.
      */
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo_evento")
     private EnumTipoAcceso tipoAcceso;
 
