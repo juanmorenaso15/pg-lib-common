@@ -4,9 +4,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pulse_gym.lb_common.enums.EnumEstadoSesion;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -48,8 +52,9 @@ public class SesionEntrenamiento {
     private Integer duracionMinutos;
 
     /** Estado de la sesión (ej: COMPLETADA, PENDIENTE, CANCELADA) */
-    @Column(name = "estado", nullable = false)
-    private String estado;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", nullable = false, length = 20)
+    private EnumEstadoSesion estado;
 
     /** Observaciones adicionales sobre la sesión */
     @Column(name = "observaciones", columnDefinition = "TEXT")

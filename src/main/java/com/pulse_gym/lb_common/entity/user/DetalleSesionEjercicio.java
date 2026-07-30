@@ -2,8 +2,12 @@ package com.pulse_gym.lb_common.entity.user;
 
 import java.math.BigDecimal;
 
+import com.pulse_gym.lb_common.enums.EnumEstadoEjecucionEjercicio;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -47,8 +51,9 @@ public class DetalleSesionEjercicio {
     private BigDecimal pesoUsado;
 
     /** Estado del detalle (ej: COMPLETADO, PENDIENTE) */
-    @Column(name = "estado", nullable = false)
-    private String estado;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", nullable = false, length = 20)
+    private EnumEstadoEjecucionEjercicio estado;
 
     /** Observaciones adicionales sobre el ejercicio */
     @Column(name = "observaciones", columnDefinition = "TEXT")
