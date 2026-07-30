@@ -30,20 +30,3 @@ public class DashboardProgresoSocioDTO {
     /** Estadísticas adicionales del socio */
     private Map<String, Object> estadisticas;
 }
-
-/**
- * DTO interno para la evolución de un ejercicio específico.
- * El estado puede ser: PROGRESO, ESTANCADO, RETROCESO.
- */
-@Data
-class EvolucionEjercicioDTO {
-
-    /** Nombre del ejercicio */
-    private String nombreEjercicio;
-
-    /** Progreso medido en porcentaje o valor */
-    private BigDecimal progreso;
-
-    /** Estado del progreso (PROGRESO, ESTANCADO, RETROCESO) */
-    private String estado;
-}
