@@ -44,5 +44,6 @@ public class EventoAcceso {
      */
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
+    
 
 }

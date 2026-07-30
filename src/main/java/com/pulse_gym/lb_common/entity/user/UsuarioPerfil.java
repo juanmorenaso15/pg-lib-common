@@ -118,7 +118,7 @@ public class UsuarioPerfil {
      * Turno laboral o de asistencia asignado en el sistema
      */
     @Enumerated(EnumType.STRING)
-    @Column(name = "turno", nullable = false, columnDefinition = "ENUM('mañana', 'tarde', 'noche')")
+    @Column(name = "turno", nullable = false)
     private EnumTurno turno;
 
     /**
@@ -149,7 +149,7 @@ public class UsuarioPerfil {
      * Nivel de conocimiento o condición física actual que posee el usuario
      */
     @Enumerated(EnumType.STRING)
-    @Column(name = "nivel_experiencia", nullable = false, columnDefinition = "ENUM('novato', 'intermedio', 'avanzado')")
+    @Column(name = "nivel_experiencia", nullable = false)
     private EnumNivelExperiencia nivelExperiencia;
 
     /**
