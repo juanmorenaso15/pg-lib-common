@@ -79,6 +79,6 @@ class DetalleRutinaExportacionDTO {
     /** Notas adicionales */
     private String notas;
 
-    /** URL de la imagen del ejercicio */
-    private String urlImagen;
+    /** Lista de detalles de la rutina para exportación */
+    private List<DetalleRutinaExportacionDTO> detalles;
 }
