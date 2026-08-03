@@ -80,6 +80,10 @@ public class PlanNutricionalIA {
     @Column(name = "activo", nullable = false)
     private Boolean activo = true;
 
+    /** Explicación de la generación del plan por parte de la IA */
+    @Column(name = "explicacion_ia", columnDefinition = "TEXT")
+    private String explicacionIA;
+
     /** Establece la fecha de generación antes de persistir */
     @PrePersist
     protected void onCreate() {
