@@ -8,12 +8,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "evento_pago")
+@Table(name = "evento_pago", indexes = {
+    @Index(name = "idx_evento_pago_fecha", columnList = "fecha_pago"),
+    @Index(name = "idx_evento_pago_socio", columnList = "socio_identificador")
+})
 public class EventoPago {
     
     /**
