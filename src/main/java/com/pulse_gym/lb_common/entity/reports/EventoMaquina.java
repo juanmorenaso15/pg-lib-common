@@ -9,7 +9,10 @@ import java.time.LocalDateTime;
 import com.pulse_gym.lb_common.enums.EnumEstado;
 
 @Entity
-@Table(name = "evento_maquina")
+@Table(name = "evento_maquina", indexes = {
+    @Index(name = "idx_evento_maquina_fecha", columnList = "fecha_reporte"),
+    @Index(name = "idx_evento_maquina_nombre", columnList = "nombre_maquina")
+})
 @Data
 public class EventoMaquina {
     

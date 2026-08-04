@@ -13,12 +13,16 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "evento_acceso")
+@Table(name = "evento_acceso", indexes = {
+    @Index(name = "idx_evento_acceso_fecha", columnList = "fecha_registro"),
+    @Index(name = "idx_evento_acceso_socio", columnList = "socio_identificacion")
+})
 public class EventoAcceso {
 
     /**
