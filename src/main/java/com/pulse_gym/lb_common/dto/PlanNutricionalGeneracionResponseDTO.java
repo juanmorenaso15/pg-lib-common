@@ -32,6 +32,7 @@ public class PlanNutricionalGeneracionResponseDTO {
     private BigDecimal grasasG;
 
     /** Restricciones dietéticas aplicadas */
+    @JsonProperty("restricciones_dieteticas")
     private List<String> restriccionesDieteticas;
 
     /** Sugerencias de comidas por tipo (desayuno, almuerzo, etc.) */
