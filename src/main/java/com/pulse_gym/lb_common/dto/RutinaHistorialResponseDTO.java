@@ -14,7 +14,7 @@ public class RutinaHistorialResponseDTO {
     private Integer version;
 
     /** Datos de la rutina en formato JSON */
-    private String datosJson;
+    private Object datosJson;
 
     /** Usuario que realizó la modificación */
     private String modificadoPor;
