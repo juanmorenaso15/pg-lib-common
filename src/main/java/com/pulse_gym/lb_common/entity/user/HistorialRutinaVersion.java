@@ -38,6 +38,10 @@ public class HistorialRutinaVersion {
     @Column(name = "datos_json", nullable = false, columnDefinition = "TEXT")
     private String datosJson;
 
+    /** Nombre del usuario que realizó la modificación */
+    @Column(name = "modificado_por", length = 255)
+    private String modificadoPorNombre;
+
     /** Usuario que realizó la modificación */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_id_modificado_por")
