@@ -41,4 +41,13 @@ public class RutinaExportacionDTO {
     /** Lista de detalles de la rutina para exportación */
     private List<DetalleRutinaExportacionDTO> detalles;
 
+    /** Usuario que modificó la rutina por última vez */
+    private String modificadoPor;
+
+    /** Fecha de la última modificación */
+    private LocalDateTime fechaModificacion;
+
+    /** Motivo de la última modificación */
+    private String motivoModificacion;
+
 }
