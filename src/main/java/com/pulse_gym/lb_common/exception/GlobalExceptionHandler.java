@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -112,6 +113,24 @@ public class GlobalExceptionHandler {
         log.warn("Error de autorización: {}", ex.getMessage());
         MessegeGlobalDTO response = new MessegeGlobalDTO(ex.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<MessegeGlobalDTO> handleHttpMessageNotReadable(HttpMessageNotReadableException e) {
+        String mensaje = "Error en el formato de los datos enviados. ";
+
+        if (e.getMessage().contains("EnumTurno")) {
+            mensaje += "El campo 'turno' solo acepta valores: 'mañana', 'tarde' o 'noche' (en minúsculas)";
+        } else if (e.getMessage().contains("EnumNivelExperiencia")) {
+            mensaje += "El campo 'nivelExperiencia' solo acepta valores: 'novato', 'intermedio' o 'avanzado' (en minúsculas)";
+        } else if (e.getMessage().contains("EnumRol")) {
+            mensaje += "El campo 'rol' solo acepta valores: 'socio', 'entrenador', 'administrador' o 'recepcionista' (en minúsculas)";
+        } else {
+            mensaje += "Verifica que los valores enviados sean correctos.";
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new MessegeGlobalDTO(mensaje));
     }
 
 }
