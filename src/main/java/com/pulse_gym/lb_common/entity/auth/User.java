@@ -23,7 +23,7 @@ import lombok.Data;
 @Data
 @Table(name = "usuarios_auth")
 public class User {
-    
+
     /**
      * Identificador único del usuario, generado automáticamente por la base de
      * datos
@@ -75,4 +75,39 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PasswordResetToken> resetTokens = new ArrayList<>();
 
+    /** Número de intentos fallidos de inicio de sesión */
+    @Column(name = "failed_attempts", nullable = false)
+    private Integer failedAttempts = 0;
+
+    /** Fecha y hora de bloqueo del usuario */
+    @Column(name = "lock_time")
+    private LocalDateTime lockTime;
+
+    /**
+     * Verifica si la cuenta del usuario está bloqueada debido a intentos fallidos de inicio de sesión.
+     * @return true si la cuenta está bloqueada, false en caso contrario
+     */
+    public boolean isLocked() {
+        if (lockTime == null)
+            return false;
+        return lockTime.plusSeconds(30).isAfter(LocalDateTime.now());
+    }
+
+    /**
+     * Incrementa el número de intentos fallidos de inicio de sesión.
+     */
+    public void incrementFailedAttempts() {
+        this.failedAttempts = (this.failedAttempts == null ? 0 : this.failedAttempts) + 1;
+        if (this.failedAttempts >= 3) {
+            this.lockTime = LocalDateTime.now();
+        }
+    }
+
+    /**
+     * Reinicia el número de intentos fallidos de inicio de sesión.
+     */
+    public void resetFailedAttempts() {
+        this.failedAttempts = 0;
+        this.lockTime = null;
+    }
 }
