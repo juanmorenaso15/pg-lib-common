@@ -19,6 +19,7 @@ public class PlanNutricionalGeneracionRequestDTO {
     private Long idRutina;
 
     /** Restricciones dietéticas del socio (ej: vegetariano, vegano, sin gluten) */
+    @JsonProperty("restricciones_dieteticas") 
     private List<String> restriccionesDieteticas;
 
     /** Alergias alimentarias del socio */

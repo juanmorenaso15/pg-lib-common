@@ -32,6 +32,7 @@ public class PlanNutricionalGeneracionResponseDTO {
     private BigDecimal grasasG;
 
     /** Restricciones dietéticas aplicadas */
+    @JsonProperty("restricciones_dieteticas")
     private List<String> restriccionesDieteticas;
 
     /** Sugerencias de comidas por tipo (desayuno, almuerzo, etc.) */
@@ -50,4 +51,13 @@ public class PlanNutricionalGeneracionResponseDTO {
 
     /** Fecha de generación del plan */
     private LocalDateTime fechaGeneracion;
+    
+    /** Usuario que realizó la última modificación */
+    private String modificadoPor;
+    
+    /** Fecha de la última modificación */
+    private LocalDateTime fechaModificacion;
+    
+    /** Motivo de la última modificación */
+    private String motivoModificacion;
 }

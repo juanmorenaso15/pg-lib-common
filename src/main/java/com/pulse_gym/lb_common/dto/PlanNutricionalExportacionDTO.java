@@ -51,5 +51,12 @@ public class PlanNutricionalExportacionDTO {
     /** Sugerencias de comidas agrupadas por tipo */
     private Map<String, List<SugerenciaComidaExportacionDTO>> sugerenciasComidas;
 
-}
+    /** Usuario que modificó el plan por última vez */
+    private String modificadoPor;
 
+    /** Fecha de la última modificación */
+    private LocalDateTime fechaModificacion;
+
+    /** Motivo de la última modificación */
+    private String motivoModificacion;
+}

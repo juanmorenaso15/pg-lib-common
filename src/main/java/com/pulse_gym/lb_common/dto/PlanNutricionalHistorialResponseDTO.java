@@ -5,15 +5,15 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class RutinaHistorialResponseDTO {
+public class PlanNutricionalHistorialResponseDTO {
 
     /** ID del historial */
     private Long idHistorial;
 
-    /** Versión de la rutina en este historial */
+    /** Versión del plan en este historial */
     private Integer version;
 
-    /** Datos de la rutina en formato JSON */
+    /** Datos del plan en formato JSON */
     private Object datosJson;
 
     /** Usuario que realizó la modificación */

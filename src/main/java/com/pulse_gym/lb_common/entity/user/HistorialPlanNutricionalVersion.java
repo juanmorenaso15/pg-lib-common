@@ -15,9 +15,9 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "historial_rutina_version")
+@Table(name = "historial_plan_nutricional_version")
 @Data
-public class HistorialRutinaVersion {
+public class HistorialPlanNutricionalVersion {
 
     /** Identificador único del historial */
     @Id
@@ -25,21 +25,21 @@ public class HistorialRutinaVersion {
     @Column(name = "id_historial")
     private Long idHistorial;
 
-    /** Rutina a la que pertenece este historial */
+    /** Plan nutricional al que pertenece este historial */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_id_rutina_ia", nullable = false)
-    private RutinaIA rutinaIa;
+    @JoinColumn(name = "fk_id_plan_nutricional", nullable = false)
+    private PlanNutricionalIA planNutricional;
 
-    /** Versión de la rutina en este historial */
+    /** Versión del plan en este historial */
     @Column(name = "version", nullable = false)
     private Integer version;
 
-    /** Datos de la rutina en formato JSON */
+    /** Datos del plan en formato JSON */
     @Column(name = "datos_json", nullable = false, columnDefinition = "TEXT")
     private String datosJson;
 
     /** Nombre del usuario que realizó la modificación */
-    @Column(name = "modificado_por", length = 255)
+    @Column(name = "modificado_por_nombre", length = 255)
     private String modificadoPorNombre;
 
     /** Usuario que realizó la modificación */
@@ -55,7 +55,6 @@ public class HistorialRutinaVersion {
     @Column(name = "motivo", length = 255)
     private String motivo;
 
-    /** Establece la fecha de modificación antes de persistir */
     @PrePersist
     protected void onCreate() {
         fechaModificacion = LocalDateTime.now();
