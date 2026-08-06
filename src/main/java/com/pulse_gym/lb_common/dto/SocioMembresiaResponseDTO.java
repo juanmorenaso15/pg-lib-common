@@ -71,4 +71,29 @@ public class SocioMembresiaResponseDTO {
 
     /** Fecha de actualización */
     private LocalDateTime fechaActualizacion;
+
+    /**
+     * Calcula los días restantes hasta el vencimiento de la membresía en tiempo real.
+     * Actualiza los campos diasRestantes, estaVencida y estaActiva según corresponda.
+     */
+    public void calcularDiasRestantesEnTiempoReal() {
+        if (this.fechaVencimiento == null) {
+            this.diasRestantes = 0L;
+            this.estaVencida = true;
+            this.estaActiva = false;
+            return;
+        }
+        
+        long dias = LocalDate.now().until(this.fechaVencimiento).getDays();
+        this.diasRestantes = Math.max(0, dias);
+        
+        this.estaVencida = dias <= 0;
+        this.estaActiva = !this.estaVencida && "ACTIVA".equals(this.estado);
+        
+        if ("ACTIVA".equals(this.estado) && dias <= 0) {
+            this.estado = "VENCIDA";
+            this.estaActiva = false;
+            this.estaVencida = true;
+        }
+    }
 }
