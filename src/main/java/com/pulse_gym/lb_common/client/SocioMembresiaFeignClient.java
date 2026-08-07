@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.util.List;
 
-@FeignClient(name = "ms-users", path = "/api/internal/socios-membresias",  contextId = "manejoSociosMora")
+@FeignClient(name = "pg-ms-users", path = "/api/internal/socios-membresias",  contextId = "manejoSociosMora")
 public interface SocioMembresiaFeignClient {
 
     @GetMapping("/mora")
