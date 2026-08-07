@@ -1,16 +1,21 @@
 package com.pulse_gym.lb_common.entity.user;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.pulse_gym.lb_common.enums.EnumTipoDuracion;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -66,6 +71,10 @@ public class Membresia {
     @Column(name = "activo", nullable = false)
     private Boolean activo = true;
 
+    /** La lista de asignaciones de socios a esta membresía */
+    @OneToMany(mappedBy = "membresia", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<SocioMembresia> socioMembresias = new ArrayList<>();
+
     /** Precio fijo de la IA */
     private static final BigDecimal PRECIO_IA_FIJO = new BigDecimal("20000");
 
@@ -73,7 +82,9 @@ public class Membresia {
     private static final BigDecimal PRECIO_IA_FIJO_ANUAL = new BigDecimal("80000");
 
     /**
-     * Calcula el precio total de la membresía basado en el precio por día, la duración y si incluye IA
+     * Calcula el precio total de la membresía basado en el precio por día, la
+     * duración y si incluye IA
+     * 
      * @return El precio total calculado de la membresía
      */
     public BigDecimal calcularPrecioTotal() {
@@ -97,6 +108,7 @@ public class Membresia {
 
     /**
      * Obtiene la descripción de la duración
+     * 
      * @return La descripción de la duración
      */
     public String getDuracionDescripcion() {
