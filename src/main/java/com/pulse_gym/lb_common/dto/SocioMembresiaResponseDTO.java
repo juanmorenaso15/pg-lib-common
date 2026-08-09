@@ -72,9 +72,22 @@ public class SocioMembresiaResponseDTO {
     /** Fecha de actualización */
     private LocalDateTime fechaActualizacion;
 
+    /** Indica si la membresía es flexible */
+    private Boolean esFlexible;
+
     /**
-     * Calcula los días restantes hasta el vencimiento de la membresía en tiempo real.
-     * Actualiza los campos diasRestantes, estaVencida y estaActiva según corresponda.
+     * Cantidad de días para membresías flexibles (solo aplica si esFlexible = true)
+     */
+    private Integer cantidadDias;
+
+    /** Precio por día (solo aplica si esFlexible = true) */
+    private BigDecimal precioPorDia;
+
+    /**
+     * Calcula los días restantes hasta el vencimiento de la membresía en tiempo
+     * real.
+     * Actualiza los campos diasRestantes, estaVencida y estaActiva según
+     * corresponda.
      */
     public void calcularDiasRestantesEnTiempoReal() {
         if (this.fechaVencimiento == null) {
@@ -83,17 +96,43 @@ public class SocioMembresiaResponseDTO {
             this.estaActiva = false;
             return;
         }
-        
+
         long dias = LocalDate.now().until(this.fechaVencimiento).getDays();
         this.diasRestantes = Math.max(0, dias);
-        
+
         this.estaVencida = dias <= 0;
         this.estaActiva = !this.estaVencida && "ACTIVA".equals(this.estado);
-        
+
         if ("ACTIVA".equals(this.estado) && dias <= 0) {
             this.estado = "VENCIDA";
             this.estaActiva = false;
             this.estaVencida = true;
         }
+    }
+
+    /**
+     * Calcula el precio real de la membresía considerando si es flexible o no.
+     * 
+     * @return El precio total de la membresía, calculado según su tipo (fija o
+     *         flexible).
+     */
+    public BigDecimal getPrecioReal() {
+        if (Boolean.TRUE.equals(this.esFlexible) && this.precioPorDia != null && this.cantidadDias != null) {
+            return this.precioPorDia.multiply(BigDecimal.valueOf(this.cantidadDias));
+        }
+        return this.precioTotal;
+    }
+
+    /**
+     * Calcula la descripción del tipo de membresía considerando si es flexible o
+     * no.
+     * 
+     * @return Una cadena que describe el tipo de membresía y su duración.
+     */
+    public String getTipoMembresiaDescripcion() {
+        if (Boolean.TRUE.equals(this.esFlexible)) {
+            return "Flexible - " + (this.cantidadDias != null ? this.cantidadDias + " días" : "días variables");
+        }
+        return "Fija - " + this.duracionDescripcion;
     }
 }
