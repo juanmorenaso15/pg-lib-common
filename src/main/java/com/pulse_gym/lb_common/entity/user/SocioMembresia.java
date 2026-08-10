@@ -1,5 +1,6 @@
 package com.pulse_gym.lb_common.entity.user;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -40,6 +41,14 @@ public class SocioMembresia {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_id_membresia", nullable = false)
     private Membresia membresia;
+
+    /** Precio real pagado/calculado para la asignación de la membresía */
+    @Column(name = "precio_real")
+    private BigDecimal precioReal;
+
+    /** Cantidad de días asignados (en caso de membresía flexible) */
+    @Column(name = "cantidad_dias")
+    private Integer cantidadDias;
 
     /** Fecha de inicio de la membresía */
     @Column(name = "fecha_inicio", nullable = false)
