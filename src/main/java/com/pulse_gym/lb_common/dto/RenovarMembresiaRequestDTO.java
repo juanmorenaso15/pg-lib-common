@@ -9,6 +9,9 @@ public class RenovarMembresiaRequestDTO {
     /** ID de la asignación de membresía */
     @NotNull(message = "El ID de la asignación de membresía es obligatorio")
     private Long idSocioMembresia;
+
+    /** Cantidad de días para renovación flexible (Opcional, si no se envía usa los días anteriores) */
+    private Integer cantidadDias;
     
     /** Observaciones */
     private String observaciones;
