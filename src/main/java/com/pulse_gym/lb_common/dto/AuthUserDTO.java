@@ -1,5 +1,7 @@
 package com.pulse_gym.lb_common.dto;
 
+import java.time.LocalDateTime;
+
 import com.pulse_gym.lb_common.enums.EnumRol;
 
 import lombok.Data;
@@ -27,4 +29,6 @@ public class AuthUserDTO {
      * Estado del usuario autenticado
      */
     private Boolean estado;
+
+    private LocalDateTime fechaRegistro;
 }

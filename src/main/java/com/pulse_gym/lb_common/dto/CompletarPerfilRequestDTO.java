@@ -11,6 +11,9 @@ import lombok.Data;
 @Data
 public class CompletarPerfilRequestDTO {
 
+    /** Email del usuario a completar (OBLIGATORIO) */
+    private String email; 
+    
     /** Nombre del usuario */
     private String nombre;
 

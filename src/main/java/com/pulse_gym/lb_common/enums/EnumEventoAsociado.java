@@ -35,5 +35,10 @@ public enum EnumEventoAsociado {
     /**
      * Evento de notificacion promocional
      */
-    PROMOTION
+    PROMOTION,
+
+    /** 
+     * Evento de cambiar la contraseña
+     */
+    CHANGE_PASSWORD
 }
