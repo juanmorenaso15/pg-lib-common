@@ -44,6 +44,10 @@ public class HistorialFisico {
     @Column(name = "peso_kg", precision = 10, scale = 2)
     private BigDecimal pesoKg;
 
+    /** Altura en cm */
+    @Column(name = "altura_cm", precision = 10, scale = 2)
+    private BigDecimal alturaCm;
+
     /** Porcentaje de grasa */
     @Column(name = "porcentaje_grasa", precision = 5, scale = 2)
     private BigDecimal porcentajeGrasa;

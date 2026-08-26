@@ -29,6 +29,12 @@ public class HistorialFisicoResponseDTO {
     /** Peso en kg */
     private BigDecimal pesoKg;
 
+    /** Altura en cm */
+    private BigDecimal alturaCm;
+
+    /** IMC calculado */
+    private BigDecimal imc;
+
     /** Porcentaje de grasa */
     private BigDecimal porcentajeGrasa;
 
