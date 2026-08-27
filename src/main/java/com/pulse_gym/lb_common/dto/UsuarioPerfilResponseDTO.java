@@ -18,6 +18,9 @@ public class UsuarioPerfilResponseDTO {
     /** ID del usuario */
     private Long idUsuario;
 
+    /** Nombre de usuario (username) - desde Auth */
+    private String username;
+
     /** Rol del usuario (ADMIN, ENTRENADOR, RECEPCIONISTA, SOCIO) */
     private EnumRol rol;
 

@@ -31,4 +31,6 @@ public class AuthUserDTO {
     private Boolean estado;
 
     private LocalDateTime fechaRegistro;
+
+    private String fotoUrl;
 }
