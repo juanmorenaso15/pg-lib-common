@@ -20,16 +20,31 @@ public class HistorialFisicoRequestDTO {
     private LocalDateTime fechaMedicion;
 
     /** Peso en kg */
+    @NotNull(message = "El peso es obligatorio")
     private BigDecimal pesoKg;
 
-    /** Porcentaje de grasa */
+    private BigDecimal alturaCm;
+
+    /** Porcentaje de grasa (Opcional, si es null o 0 se calcula automáticamente) */
     private BigDecimal porcentajeGrasa;
 
-    /** Porcentaje de músculo */
+    /** Porcentaje de músculo (Opcional, si es null o 0 se calcula automáticamente) */
     private BigDecimal porcentajeMusculo;
+
+    /** Cuello en cm */
+    private BigDecimal cuelloCm;
+
+    /** Cintura escapular en cm */
+    private BigDecimal cinturaEscapularCm;
 
     /** Cintura en cm */
     private BigDecimal cinturaCm;
+
+    /** Cadera en cm */
+    private BigDecimal caderaCm;
+
+    /** Tórax en cm */
+    private BigDecimal toraxCm;
 
     /** Pecho en cm */
     private BigDecimal pechoCm;
@@ -46,4 +61,9 @@ public class HistorialFisicoRequestDTO {
     /** Pierna derecha en cm */
     private BigDecimal piernaDerCm;
 
+    /** Pantorrilla izquierda en cm */
+    private BigDecimal pantorrillaIzqCm;
+
+    /** Pantorrilla derecha en cm */
+    private BigDecimal pantorrillaDerCm;
 }

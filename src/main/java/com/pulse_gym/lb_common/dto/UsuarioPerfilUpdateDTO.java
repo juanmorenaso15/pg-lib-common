@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.pulse_gym.lb_common.enums.EnumNivelExperiencia;
+import com.pulse_gym.lb_common.enums.EnumSexo;
 import com.pulse_gym.lb_common.enums.EnumTurno;
 
 import lombok.Data;
@@ -19,6 +20,9 @@ public class UsuarioPerfilUpdateDTO {
 
     /** Email del usuario */
     private String email;
+
+    /** Sexo del usuario */
+    private EnumSexo sexo;
 
     /** Teléfono de contacto */
     private String telefono;
@@ -47,7 +51,7 @@ public class UsuarioPerfilUpdateDTO {
     /** Turno de trabajo (para recepcionista) */
     private EnumTurno turno;
 
-    /** Fecha de nacimiento */
+    /** Fecha de nacimiento del usuario */
     private LocalDate fechaNacimiento;
 
     /** Nombre del contacto de emergencia */
@@ -56,10 +60,10 @@ public class UsuarioPerfilUpdateDTO {
     /** Teléfono del contacto de emergencia */
     private String contactoEmergenciaTelefono;
 
-    /** Objetivo principal del socio */
+    /** Objetivo principal (para socio) */
     private String objetivoPrincipal;
 
-    /** Nivel de experiencia del socio */
+    /** Nivel de experiencia (para socio) */
     private EnumNivelExperiencia nivelExperiencia;
 
     /** ID de la sede asignada */

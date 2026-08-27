@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.pulse_gym.lb_common.enums.EnumEstadoUsuario;
 import com.pulse_gym.lb_common.enums.EnumNivelExperiencia;
+import com.pulse_gym.lb_common.enums.EnumSexo;
 import com.pulse_gym.lb_common.enums.EnumTurno;
 
 import jakarta.persistence.CascadeType;
@@ -30,165 +31,118 @@ import lombok.Data;
 @Table(name = "usuario_perfil")
 public class UsuarioPerfil {
 
-    /**
-     * Identificador único del usuario, generado automáticamente por la base de
-     * datos
-     */
+    /** Identificador único del usuario */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
     private Long idUsuario;
 
-    /**
-     * Nombres del usuario
-     */
+    /** Nombre del usuario */
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
-    /**
-     * Correo de usuario
-     */
+    /** Email del usuario */
     @Column(name = "email", nullable = false, length = 150)
     private String email;
 
-    /**
-     * Apellidos del usuario
-     */
+    /** Apellido del usuario */
     @Column(name = "apellido", nullable = false, length = 100)
     private String apellido;
 
-    /**
-     * Estado del usuario (ACTIVO/INACTIVO)
-     */
+    /** Estado del usuario (ACTIVO, INACTIVO, SUSPENDIDO) */
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
     private EnumEstadoUsuario estado = EnumEstadoUsuario.ACTIVO;
 
-    /**
-     * Número de teléfono de contacto del usuario
-     */
+    /** Sexo del usuario (MASCULINO, FEMENINO, OTRO) */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sexo")
+    private EnumSexo sexo;
+
+    /** Teléfono de contacto */
     @Column(name = "telefono", length = 20)
     private String telefono;
 
-    /**
-     * Número de documento de identidad, único para cada usuario registrado
-     */
+    /** Documento de identidad único */
     @Column(name = "documento_identidad", nullable = false, unique = true, length = 20)
     private String documentoIdentidad;
 
-    /**
-     * URL o ruta de almacenamiento de la foto de perfil del usuario
-     */
+    /** URL de la foto de perfil */
     @Column(name = "foto_url", nullable = false, length = 255)
     private String fotoUrl;
 
-    /**
-     * Fecha en la que el usuario fue contratado (aplica para personal
-     * administrativo y entrenadores)
-     */
+    /** Fecha de contratación (para personal) */
     @Column(name = "fecha_contratacion", nullable = false)
     private LocalDate fechaContratacion;
 
-    /**
-     * Especialidad o enfoque profesional del entrenador
-     */
+    /** Especialidad del entrenador */
     @Column(name = "especialidad", nullable = false, length = 100)
     private String especialidad;
 
-    /**
-     * Cantidad de años de experiencia laboral del usuario en su campo
-     */
+    /** Años de experiencia (para entrenador) */
     @Column(name = "anos_experiencia", nullable = false)
     private Short anosExperiencia;
 
-    /**
-     * Horarios y días en los que el usuario está disponible para laborar o asistir
-     */
+    /** Horario de disponibilidad (para entrenador) */
     @Column(name = "horario_disponibilidad", nullable = false, length = 255)
     private String horarioDisponibilidad;
 
-    /**
-     * Costo o cobro por hora asignado (relevante para el cálculo de nómina de
-     * entrenadores)
-     */
+    /** Tarifa por hora (para entrenador) */
     @Column(name = "tarifa_hora", nullable = false, precision = 10, scale = 2)
     private BigDecimal tarifaHora;
 
-    /**
-     * Turno laboral o de asistencia asignado en el sistema
-     */
+    /** Turno de trabajo (para recepcionista) */
     @Enumerated(EnumType.STRING)
     @Column(name = "turno", nullable = false)
     private EnumTurno turno;
 
-    /**
-     * Fecha de nacimiento del usuario
-     */
+    /** Fecha de nacimiento del usuario */
     @Column(name = "fecha_nacimiento", nullable = false)
     private LocalDate fechaNacimiento;
 
-    /**
-     * Nombre completo de la persona designada para casos de emergencia
-     */
+    /** Nombre del contacto de emergencia */
     @Column(name = "contacto_emergencia_nombre", nullable = false, length = 100)
     private String contactoEmergenciaNombre;
 
-    /**
-     * Teléfono de la persona designada para el contacto de emergencia
-     */
+    /** Teléfono del contacto de emergencia */
     @Column(name = "contacto_emergencia_telefono", nullable = false, length = 20)
     private String contactoEmergenciaTelefono;
 
-    /**
-     * Meta física o deportiva que el socio busca alcanzar en el gimnasio
-     */
+    /** Objetivo principal del socio */
     @Column(name = "objetivo_principal", nullable = false, length = 255)
     private String objetivoPrincipal;
 
-    /**
-     * Nivel de conocimiento o condición física actual que posee el usuario
-     */
+    /** Nivel de experiencia del socio */
     @Enumerated(EnumType.STRING)
     @Column(name = "nivel_experiencia", nullable = false)
     private EnumNivelExperiencia nivelExperiencia;
 
-    /**
-     * Fecha y hora exacta en la que se registró el perfil. No se puede modificar
-     * tras su creación
-     */
+    /** Fecha de registro del usuario */
     @Column(name = "fecha_registro", nullable = false, updatable = false)
     private LocalDateTime fechaRegistro;
 
-    /**
-     * Identificador de la sede física a la cual pertenece o asiste el usuario
-     */
+    /** ID de la sede asignada */
     @Column(name = "id_sede")
     private Integer idSede;
 
+    /** ID del dispositivo biométrico */
     @Column(name = "biometric_device_id", length = 100)
     private String biometricDeviceId;
 
-    /**
-     * Método callback de JPA que se ejecuta automáticamente antes de persistir el
-     * registro,
-     * asignando la fecha y hora actual del sistema a la propiedad fechaRegistro.
-     */
+    /** Establece la fecha de registro antes de persistir */
     @PrePersist
     protected void onCreate() {
         fechaRegistro = LocalDateTime.now();
     }
 
-    /**
-     * Lista de documentos legales asociados al usuario
-     */
+    /** Lista de documentos legales del usuario */
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DocumentoLegal> documentosLegales = new ArrayList<>();
 
     /**
-     * Agrega un documento legal a la lista de documentos asociados al usuario y
-     * establece la relación bidireccional entre el usuario y el documento.
+     * Agrega un documento legal al usuario
      * 
-     * @param documento El documento legal a agregar al usuario
+     * @param documento Documento a agregar
      */
     public void addDocumentoLegal(DocumentoLegal documento) {
         documentosLegales.add(documento);
@@ -196,27 +150,23 @@ public class UsuarioPerfil {
     }
 
     /**
-     * Elimina un documento legal de la lista de documentos asociados al usuario y
-     * rompe la relación bidireccional entre el usuario y el documento.
+     * Elimina un documento legal del usuario
      * 
-     * @param documento El documento legal a eliminar del usuario
+     * @param documento Documento a eliminar
      */
     public void removeDocumentoLegal(DocumentoLegal documento) {
         documentosLegales.remove(documento);
         documento.setUsuario(null);
     }
 
-    /**
-     * Lista de certificaciones asociadas al usuario
-     */
+    /** Lista de certificaciones del entrenador */
     @OneToMany(mappedBy = "entrenador", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Certificacion> certificaciones = new ArrayList<>();
 
     /**
-     * Agrega una certificación a la lista de certificaciones asociadas al usuario y
-     * establece la relación bidireccional entre el usuario y la certificación.
+     * Agrega una certificación al entrenador
      * 
-     * @param certificacion La certificación a agregar al usuario
+     * @param certificacion Certificación a agregar
      */
     public void addCertificacion(Certificacion certificacion) {
         certificaciones.add(certificacion);
@@ -224,39 +174,31 @@ public class UsuarioPerfil {
     }
 
     /**
-     * Elimina una certificación de la lista de certificaciones asociadas al usuario
-     * y
-     * rompe la relación bidireccional entre el usuario y la certificación.
+     * Elimina una certificación del entrenador
      * 
-     * @param certificacion La certificación a eliminar del usuario
+     * @param certificacion Certificación a eliminar
      */
     public void removeCertificacion(Certificacion certificacion) {
         certificaciones.remove(certificacion);
         certificacion.setEntrenador(null);
     }
 
-    /**
-     * Perfil médico asociado al usuario
-     */
+    /** Perfil médico del socio */
     @OneToOne(mappedBy = "socio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private PerfilMedico perfilMedico;
 
-    /**
-     * Lista de historial físico asociado al usuario (socio)
-     */
+    /** Historial físico del socio */
     @OneToMany(mappedBy = "socio", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<HistorialFisico> historialFisico = new ArrayList<>();
 
-    /**
-     * Lista de mediciones tomadas por el recepcionista
-     */
+    /** Mediciones registradas por el recepcionista */
     @OneToMany(mappedBy = "recepcionista", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<HistorialFisico> medicionesRegistradas = new ArrayList<>();
 
     /**
-     * Agrega una medición al historial del socio
+     * Agrega un registro al historial físico del socio
      * 
-     * @param historial La medición a agregar
+     * @param historial Registro a agregar
      */
     public void addHistorialFisico(HistorialFisico historial) {
         historialFisico.add(historial);
@@ -264,25 +206,23 @@ public class UsuarioPerfil {
     }
 
     /**
-     * Elimina una medición del historial del socio
+     * Elimina un registro del historial físico del socio
      * 
-     * @param historial La medición a eliminar
+     * @param historial Registro a eliminar
      */
     public void removeHistorialFisico(HistorialFisico historial) {
         historialFisico.remove(historial);
         historial.setSocio(null);
     }
 
-    /**
-     * Lista de membresías asignadas al socio (historial)
-     */
+    /** Membresías asignadas al socio */
     @OneToMany(mappedBy = "socio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SocioMembresia> membresiaAsignadas = new ArrayList<>();
 
     /**
-     * Membresía activa actual del socio (helper method)
+     * Obtiene la membresía activa del socio
      * 
-     * @return La membresía activa actual o null si no tiene
+     * @return Membresía activa o null si no tiene
      */
     public SocioMembresia getMembresiaActiva() {
         if (membresiaAsignadas == null)
@@ -294,9 +234,9 @@ public class UsuarioPerfil {
     }
 
     /**
-     * Agrega una membresía al historial del socio
+     * Agrega una membresía al socio
      * 
-     * @param socioMembresia La membresía a agregar
+     * @param socioMembresia Membresía a agregar
      */
     public void addMembresiaAsignadav(SocioMembresia socioMembresia) {
         membresiaAsignadas.add(socioMembresia);
@@ -304,9 +244,9 @@ public class UsuarioPerfil {
     }
 
     /**
-     * Elimina una membresía del historial del socio
+     * Elimina una membresía del socio
      * 
-     * @param socioMembresia La membresía a eliminar
+     * @param socioMembresia Membresía a eliminar
      */
     public void removeMembresiaAsignada(SocioMembresia socioMembresia) {
         membresiaAsignadas.remove(socioMembresia);

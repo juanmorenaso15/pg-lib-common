@@ -5,8 +5,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.pulse_gym.lb_common.enums.EnumEstadoUsuario;
-import com.pulse_gym.lb_common.enums.EnumRol;
 import com.pulse_gym.lb_common.enums.EnumNivelExperiencia;
+import com.pulse_gym.lb_common.enums.EnumRol;
+import com.pulse_gym.lb_common.enums.EnumSexo;
 import com.pulse_gym.lb_common.enums.EnumTurno;
 
 import lombok.Data;
@@ -14,120 +15,75 @@ import lombok.Data;
 @Data
 public class UsuarioPerfilResponseDTO {
 
-    /**
-     * Identificador único del usuario asignado por el sistema
-     */
+    /** ID del usuario */
     private Long idUsuario;
 
-    /**
-     * Rol asignado al usuario dentro del sistema de Pulse Gym
-     */
+    /** Rol del usuario (ADMIN, ENTRENADOR, RECEPCIONISTA, SOCIO) */
     private EnumRol rol;
 
-    /**
-     * Estado actual del usuario, indicando si está activo, inactivo o suspendido
-     */
+    /** Estado del usuario (ACTIVO, INACTIVO, SUSPENDIDO) */
     private EnumEstadoUsuario estado;
 
-    /**
-     * Correo electrónico registrado del usuario, utilizado para comunicaciones y
-     * autenticación
-     */
+    /** Sexo del usuario */
+    private EnumSexo sexo;
 
+    /** Email del usuario */
     private String email;
-    /**
-     * Nombres completos del usuario
-     */
+
+    /** Nombre del usuario */
     private String nombre;
 
-    /**
-     * Apellidos completos del usuario
-     */
+    /** Apellido del usuario */
     private String apellido;
 
-    /**
-     * Número de teléfono de contacto del usuario
-     */
+    /** Teléfono de contacto */
     private String telefono;
 
-    /**
-     * Número de documento de identidad único del usuario
-     */
+    /** Documento de identidad */
     private String documentoIdentidad;
 
-    /**
-     * URL de la imagen o foto de perfil del usuario
-     */
+    /** URL de la foto de perfil */
     private String fotoUrl;
 
-    /**
-     * Fecha de contratación o vinculación del usuario
-     */
+    /** Fecha de contratación (para personal) */
     private LocalDate fechaContratacion;
 
-    /**
-     * Especialidad técnica o enfoque profesional del usuario
-     */
+    /** Especialidad del entrenador */
     private String especialidad;
 
-    /**
-     * Años de experiencia laboral acumulados por el usuario
-     */
+    /** Años de experiencia (para entrenador) */
     private Short anosExperiencia;
 
-    /**
-     * Horarios de disponibilidad o franjas horarias registradas
-     */
+    /** Horario de disponibilidad (para entrenador) */
     private String horarioDisponibilidad;
 
-    /**
-     * Tarifa o costo monetario asignado por cada hora de servicio
-     */
+    /** Tarifa por hora (para entrenador) */
     private BigDecimal tarifaHora;
 
-    /**
-     * Turno de trabajo o asistencia asignado en el sistema
-     */
+    /** Turno de trabajo (para recepcionista) */
     private EnumTurno turno;
 
-    /**
-     * Fecha de nacimiento del usuario
-     */
+    /** Fecha de nacimiento del usuario */
     private LocalDate fechaNacimiento;
 
-    /**
-     * Nombre de la persona registrada para contacto en caso de emergencia
-     */
+    /** Nombre del contacto de emergencia */
     private String contactoEmergenciaNombre;
 
-    /**
-     * Teléfono de la persona registrada para contacto en caso de emergencia
-     */
+    /** Teléfono del contacto de emergencia */
     private String contactoEmergenciaTelefono;
 
-    /**
-     * Objetivo o meta principal que el usuario busca alcanzar en el gimnasio
-     */
+    /** Objetivo principal (para socio) */
     private String objetivoPrincipal;
 
-    /**
-     * Nivel de experiencia física o deportiva actual del usuario
-     */
+    /** Nivel de experiencia (para socio) */
     private EnumNivelExperiencia nivelExperiencia;
 
-    /**
-     * Fecha y hora exacta en la que el usuario fue registrado en la plataforma
-     */
+    /** Fecha de registro del usuario */
     private LocalDateTime fechaRegistro;
 
-    /**
-     * Identificador de la sede física a la cual se encuentra vinculado el usuario
-     */
+    /** ID de la sede asignada */
     private Integer idSede;
 
-    /**
-     * Id biometrico del usuario
-     */
+    /** ID del dispositivo biométrico */
     private String biometricDeviceId;
-
 }

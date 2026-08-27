@@ -29,14 +29,32 @@ public class HistorialFisicoResponseDTO {
     /** Peso en kg */
     private BigDecimal pesoKg;
 
+    /** Altura en cm */
+    private BigDecimal alturaCm;
+
+    /** IMC calculado */
+    private BigDecimal imc;
+
     /** Porcentaje de grasa */
     private BigDecimal porcentajeGrasa;
 
     /** Porcentaje de músculo */
     private BigDecimal porcentajeMusculo;
 
+    /** Cuello en cm */
+    private BigDecimal cuelloCm;
+
+    /** Cintura escapular en cm */
+    private BigDecimal cinturaEscapularCm;
+
     /** Cintura en cm */
     private BigDecimal cinturaCm;
+
+    /** Cadera en cm */
+    private BigDecimal caderaCm;
+
+    /** Tórax en cm */
+    private BigDecimal toraxCm;
 
     /** Pecho en cm */
     private BigDecimal pechoCm;
@@ -52,4 +70,10 @@ public class HistorialFisicoResponseDTO {
 
     /** Pierna derecha en cm */
     private BigDecimal piernaDerCm;
+
+    /** Pantorrilla izquierda en cm */
+    private BigDecimal pantorrillaIzqCm;
+
+    /** Pantorrilla derecha en cm */
+    private BigDecimal pantorrillaDerCm;
 }

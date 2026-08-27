@@ -44,6 +44,10 @@ public class HistorialFisico {
     @Column(name = "peso_kg", precision = 10, scale = 2)
     private BigDecimal pesoKg;
 
+    /** Altura en cm */
+    @Column(name = "altura_cm", precision = 10, scale = 2)
+    private BigDecimal alturaCm;
+
     /** Porcentaje de grasa */
     @Column(name = "porcentaje_grasa", precision = 5, scale = 2)
     private BigDecimal porcentajeGrasa;
@@ -52,9 +56,25 @@ public class HistorialFisico {
     @Column(name = "porcentaje_musculo", precision = 5, scale = 2)
     private BigDecimal porcentajeMusculo;
 
+    /** Cuello en cm */
+    @Column(name = "cuello_cm", precision = 10, scale = 2)
+    private BigDecimal cuelloCm;
+
+    /** Cintura escapular en cm */
+    @Column(name = "cintura_escapular_cm", precision = 10, scale = 2)
+    private BigDecimal cinturaEscapularCm;
+
     /** Cintura en cm */
     @Column(name = "cintura_cm", precision = 10, scale = 2)
     private BigDecimal cinturaCm;
+
+    /** Cadera en cm */
+    @Column(name = "cadera_cm", precision = 10, scale = 2)
+    private BigDecimal caderaCm;
+
+    /** Tórax en cm */
+    @Column(name = "torax_cm", precision = 10, scale = 2)
+    private BigDecimal toraxCm;
 
     /** Pecho en cm */
     @Column(name = "pecho_cm", precision = 10, scale = 2)
@@ -75,6 +95,14 @@ public class HistorialFisico {
     /** Pierna derecha en cm */
     @Column(name = "pierna_der_cm", precision = 10, scale = 2)
     private BigDecimal piernaDerCm;
+
+    /** Pantorrilla izquierda en cm */
+    @Column(name = "pantorrilla_izq_cm", precision = 10, scale = 2)
+    private BigDecimal pantorrillaIzqCm;
+
+    /** Pantorrilla derecha en cm */
+    @Column(name = "pantorrilla_der_cm", precision = 10, scale = 2)
+    private BigDecimal pantorrillaDerCm;
 
     /** Acción antes de persistir */
     @PrePersist
