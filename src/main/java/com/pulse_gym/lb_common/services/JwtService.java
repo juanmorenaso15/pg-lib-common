@@ -18,15 +18,9 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 
-    /**
-     * Clave secreta para firmar los tokens JWT (desde application.yaml)
-     */
     @Value("${security.jwt.secret-key}")
     String secretKey;
 
-    /**
-     * Tiempo de expiración del token en milisegundos (desde application.yaml)
-     */
     @Value("${security.jwt.token-expiration}")
     Long tokenExpiration;
 
@@ -42,17 +36,13 @@ public class JwtService {
 
     /**
      * Genera un token JWT con los datos del usuario
-     * 
-     * @param userId ID del usuario
-     * @param rol    Rol del usuario
-     * @param name   Nombre/email del usuario
-     * @return Token JWT firmado
      */
-    public String generateToken(Long userId, String rol, String name) {
+    public String generateToken(Long userId, String rol, String email, String username) {
         return Jwts.builder()
                 .claim("userId", userId)
                 .claim("rol", rol)
-                .subject(name)
+                .claim("username", username)  
+                .subject(email)               
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + tokenExpiration))
                 .signWith(getSignKey())
@@ -60,10 +50,7 @@ public class JwtService {
     }
 
     /**
-     * Valida si un token JWT es válido (no expirado y firma correcta)
-     * 
-     * @param token Token JWT a validar
-     * @return true si es válido, false en caso contrario
+     * Valida si un token JWT es válido
      */
     public Boolean isTokenValid(String token) {
         try {
@@ -77,12 +64,7 @@ public class JwtService {
     }
 
     /**
-     * Extrae los claims (datos) del token JWT
-     * 
-     * @param <T>      Tipo de dato a retornar
-     * @param token    Token JWT
-     * @param resolver Función para extraer un claim específico
-     * @return Valor extraído del token
+     * Extrae los claims del token
      */
     public <T> T extractClaims(String token, Function<Claims, T> resolver) {
         final Claims claims = Jwts.parser()
@@ -94,20 +76,24 @@ public class JwtService {
     }
 
     /**
-     * Extrae el nombre de usuario (subject) del token
-     * 
-     * @param token Token JWT
-     * @return Nombre de usuario o email
+     * xtrae el EMAIL del token (subject)
      */
-    public String extractUsername(String token) {
+    public String extractEmail(String token) {
         return extractClaims(token, Claims::getSubject);
     }
 
     /**
+     * Extrae el USERNAME del token (claim)
+     */
+    public String extractUsername(String token) {
+        return extractClaims(token, claims -> {
+            Object username = claims.get("username");
+            return username != null ? username.toString() : null;
+        });
+    }
+
+    /**
      * Extrae el ID del usuario del token
-     * 
-     * @param token Token JWT
-     * @return ID del usuario o null si no existe
      */
     public Long extractUserId(String token) {
         return extractClaims(token, claims -> {
@@ -118,9 +104,6 @@ public class JwtService {
 
     /**
      * Extrae el rol del usuario del token
-     * 
-     * @param token Token JWT
-     * @return Rol del usuario o null si no existe
      */
     public String extractRol(String token) {
         return extractClaims(token, claims -> {
@@ -130,24 +113,15 @@ public class JwtService {
     }
 
     /**
-     * Extrae el email del usuario del token
-     * 
-     * @param token Token JWT
-     * @return Email del usuario o null si no existe
+     * Extrae el email del usuario del token (deprecado - usar extractEmail)
      */
+    @Deprecated
     public String extractGmail(String token) {
-        return extractClaims(token, claims -> {
-            Object gmail = claims.get("gmail");
-            return gmail != null ? gmail.toString() : null;
-        });
+        return extractEmail(token);
     }
 
     /**
-     * Renueva un token JWT (refresca la fecha de expiración)
-     * 
-     * @param token Token JWT actual (puede estar cerca de expirar)
-     * @return Nuevo token JWT con fecha renovada
-     * @throws Exception Si el token es inválido o está expirado
+     * Renueva un token JWT
      */
     public String refreshToken(String token) throws Exception {
         Claims claims;
@@ -167,7 +141,13 @@ public class JwtService {
         Long userId = userIdNum != null ? userIdNum.longValue() : null;
         Object rolObj = claims.get("rol");
         String rol = rolObj != null ? rolObj.toString() : null;
+        String email = claims.getSubject();
+        String username = claims.get("username", String.class);
 
-        return generateToken(userId, rol, claims.getSubject());
+        if (username == null || username.isEmpty()) {
+            username = email != null ? email.split("@")[0] : "usuario";
+        }
+
+        return generateToken(userId, rol, email, username);
     }
 }
