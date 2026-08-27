@@ -25,10 +25,10 @@ public class HistorialFisicoRequestDTO {
 
     private BigDecimal alturaCm;
 
-    /** Porcentaje de grasa (Opcional, si es null o 0 se calcula automáticamente) */
+    /** Porcentaje de grasa (Opcional, si es null se calcula automáticamente) */
     private BigDecimal porcentajeGrasa;
 
-    /** Porcentaje de músculo (Opcional, si es null o 0 se calcula automáticamente) */
+    /** Porcentaje de músculo (Opcional, si es null se calcula automáticamente) */
     private BigDecimal porcentajeMusculo;
 
     /** Cuello en cm */
