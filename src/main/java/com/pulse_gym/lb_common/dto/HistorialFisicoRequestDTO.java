@@ -31,8 +31,20 @@ public class HistorialFisicoRequestDTO {
     /** Porcentaje de músculo (Opcional, si es null se calcula automáticamente) */
     private BigDecimal porcentajeMusculo;
 
+    /** Cuello en cm */
+    private BigDecimal cuelloCm;
+
+    /** Cintura escapular en cm */
+    private BigDecimal cinturaEscapularCm;
+
     /** Cintura en cm */
     private BigDecimal cinturaCm;
+
+    /** Cadera en cm */
+    private BigDecimal caderaCm;
+
+    /** Tórax en cm */
+    private BigDecimal toraxCm;
 
     /** Pecho en cm */
     private BigDecimal pechoCm;
@@ -48,4 +60,10 @@ public class HistorialFisicoRequestDTO {
 
     /** Pierna derecha en cm */
     private BigDecimal piernaDerCm;
+
+    /** Pantorrilla izquierda en cm */
+    private BigDecimal pantorrillaIzqCm;
+
+    /** Pantorrilla derecha en cm */
+    private BigDecimal pantorrillaDerCm;
 }
