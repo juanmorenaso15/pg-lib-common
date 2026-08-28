@@ -1,9 +1,11 @@
 package com.pulse_gym.lb_common.client;
 
+import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pulse_gym.lb_common.dto.UsuarioPerfilResponseDTO;
@@ -22,20 +24,19 @@ public interface UsuarioClient {
     UsuarioPerfilResponseDTO obtenerUsuarioPorEmail(@PathVariable("email") String email);
 
     /**
-     * Creamos un nuevo endpoint el cual no pasa por el gateway (comunicacion
-     * directa)
-     * 
-     * @param idUsuario
-     * @return
+     * Endpoint interno entre microservicios por ID
      */
     @GetMapping("/api/internal/usuarios/{idUsuario}")
     UsuarioPerfilResponseDTO obtenerUsuarioPorIdInterno(@PathVariable("idUsuario") Long idUsuario);
 
     /**
+     * Obtiene la lista completa de perfiles para cargar fotos masivamente
+     */
+    @GetMapping("/api/v1/usuarios")
+    List<UsuarioPerfilResponseDTO> obtenerTodosLosUsuarios(@RequestHeader(value = "X-User-Rol", required = false) String userRol);
+
+    /**
      * Cambia el estado de un usuario (activo/inactivo) y sincroniza con el perfil del usuario.
-     * 
-     * @param email  Email del usuario a cambiar
-     * @param estado Nuevo estado del usuario
      */
     @PutMapping("/api/internal/usuarios/email/estado")
     void cambiarEstadoInternoPorEmail(

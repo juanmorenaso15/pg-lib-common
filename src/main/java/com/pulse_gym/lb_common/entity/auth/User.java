@@ -84,7 +84,16 @@ public class User {
     private LocalDateTime lockTime;
 
     /**
-     * Verifica si la cuenta del usuario está bloqueada debido a intentos fallidos de inicio de sesión.
+     * Indica si el usuario debe cambiar su contraseña en el próximo inicio de
+     * sesión
+     */
+    @Column(name = "requiere_cambio_contrasena", nullable = false)
+    private Boolean requiereCambioContrasena = false;
+
+    /**
+     * Verifica si la cuenta del usuario está bloqueada debido a intentos fallidos
+     * de inicio de sesión.
+     * 
      * @return true si la cuenta está bloqueada, false en caso contrario
      */
     public boolean isLocked() {
