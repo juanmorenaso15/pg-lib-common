@@ -1,10 +1,10 @@
 package com.pulse_gym.lb_common.client;
 
-import java.util.List;
-
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pulse_gym.lb_common.dto.ConsultaEquipoRequestDTO;
 import com.pulse_gym.lb_common.dto.EquipoResponseWrapperDTO;
@@ -20,4 +20,13 @@ public interface EquipoClient {
      */
     @PostMapping("/api/equipos/consultar")
     EquipoResponseWrapperDTO consultarEquipos(@RequestBody ConsultaEquipoRequestDTO request);
+
+    /**
+     * Obtiene el conteo de equipos por estado
+     * 
+     * @param estado Estado del equipo (DISPONIBLE, MANTENIMIENTO, REPARACION)
+     * @return Cantidad de equipos en el estado indicado
+     */
+    @GetMapping("/api/equipos/conteo")
+    Integer obtenerConteoPorEstado(@RequestParam("estado") String estado);
 }
