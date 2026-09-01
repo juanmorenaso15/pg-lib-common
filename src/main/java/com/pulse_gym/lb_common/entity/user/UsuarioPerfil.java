@@ -25,6 +25,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -137,6 +139,8 @@ public class UsuarioPerfil {
 
     /** Lista de documentos legales del usuario */
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<DocumentoLegal> documentosLegales = new ArrayList<>();
 
     /**
@@ -161,6 +165,8 @@ public class UsuarioPerfil {
 
     /** Lista de certificaciones del entrenador */
     @OneToMany(mappedBy = "entrenador", cascade = CascadeType.ALL, orphanRemoval = true)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<Certificacion> certificaciones = new ArrayList<>();
 
     /**
@@ -185,14 +191,20 @@ public class UsuarioPerfil {
 
     /** Perfil médico del socio */
     @OneToOne(mappedBy = "socio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private PerfilMedico perfilMedico;
 
     /** Historial físico del socio */
     @OneToMany(mappedBy = "socio", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<HistorialFisico> historialFisico = new ArrayList<>();
 
     /** Mediciones registradas por el recepcionista */
     @OneToMany(mappedBy = "recepcionista", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<HistorialFisico> medicionesRegistradas = new ArrayList<>();
 
     /**
@@ -217,6 +229,8 @@ public class UsuarioPerfil {
 
     /** Membresías asignadas al socio */
     @OneToMany(mappedBy = "socio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<SocioMembresia> membresiaAsignadas = new ArrayList<>();
 
     /**
