@@ -62,6 +62,10 @@ public class PerfilMedico {
     @Column(name = "porcentaje_grasa", precision = 5, scale = 2)
     private BigDecimal porcentajeGrasa;
 
+    /** Estado activo para soporte de soft delete */
+    @Column(name = "activo", nullable = false)
+    private Boolean activo = true;
+
     /** Fecha de última actualización del perfil médico */
     @Column(name = "fecha_actualizacion", nullable = false)
     private LocalDateTime fechaActualizacion;
@@ -71,5 +75,8 @@ public class PerfilMedico {
     @PreUpdate
     protected void onUpdate() {
         fechaActualizacion = LocalDateTime.now();
+        if (activo == null) {
+            activo = true;
+        }
     }
 }
