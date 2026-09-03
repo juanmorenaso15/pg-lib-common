@@ -74,4 +74,6 @@ public class SocioAsignadoDTO {
 
     /** Fecha de última actualización */
     private LocalDateTime fechaActualizacion;
+
+    private String fotoUrl;
 }

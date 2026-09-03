@@ -15,52 +15,58 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 @Data
 @Table(name = "perfil_medico")
 public class PerfilMedico {
 
-    /** Id unico de perfil medico */
+    /** Identificador único del perfil médico */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_perfil_medico")
     private Long idPerfilMedico;
 
-    /** Usuario asociado al perfil médico */
+    /**
+     * Relación bidireccional: Excluida para evitar recursión en hashCode y toString
+     */
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_id_usuario", nullable = false, unique = true)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private UsuarioPerfil socio;
 
-    /** Peso en kilogramos */
+    /** Peso del socio en kilogramos */
     @Column(name = "peso_kg", precision = 10, scale = 2)
     private BigDecimal pesoKg;
 
-    /** Estatura en centímetros */
+    /** Estatura del socio en centímetros */
     @Column(name = "estatura_cm")
     private Short estaturaCm;
 
-    /** Alergias */
+    /** Alergias del socio */
     @Column(name = "alergias", columnDefinition = "TEXT")
     private String alergias;
 
-    /** Condiciones crónicas */
+    /** Condiciones crónicas del socio */
     @Column(name = "condiciones_cronicas", columnDefinition = "TEXT")
     private String condicionesCronicas;
 
-    /** Lesiones previas */
+    /** Lesiones previas del socio */
     @Column(name = "lesiones_previas", columnDefinition = "TEXT")
     private String lesionesPrevias;
 
-    /** Porcentaje de grasa */
+    /** Porcentaje de grasa corporal */
     @Column(name = "porcentaje_grasa", precision = 5, scale = 2)
     private BigDecimal porcentajeGrasa;
 
-    /** Fecha de actualización */
+    /** Fecha de última actualización del perfil médico */
     @Column(name = "fecha_actualizacion", nullable = false)
     private LocalDateTime fechaActualizacion;
 
-    /** Acción a realizar antes de persistir o actualizar */
+    /** Actualiza la fecha de modificación antes de persistir o actualizar */
     @PrePersist
     @PreUpdate
     protected void onUpdate() {
