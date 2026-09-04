@@ -37,4 +37,7 @@ public class DetalleRutinaExportacionDTO {
 
     /** URL de la imagen del ejercicio */
     private String urlImagen;
+
+    /** Equipo requerido para realizar el ejercicio */
+    private String equipoRequerido;
 }
