@@ -78,4 +78,9 @@ public class DetalleRutina {
     /** Equipo requerido para realizar el ejercicio */
     @Column(name = "equipo_requerido", length = 100)
     private String equipoRequerido;
+
+    /** Semana de la rutina en la que se encuentra este detalle */
+    @Column(name = "semana")
+    private Integer semana;
+
 }

@@ -64,4 +64,7 @@ public class DetalleRutinaResponseDTO {
     /** Equipo requerido para realizar el ejercicio */
     @JsonProperty("equipoRequerido")
     private String equipoRequerido;
+
+    /** Semana de la rutina en la que se encuentra este detalle */
+    private Integer semana;
 }
