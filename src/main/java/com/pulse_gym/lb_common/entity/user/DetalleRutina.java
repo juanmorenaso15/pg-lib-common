@@ -74,4 +74,8 @@ public class DetalleRutina {
     /** Fecha de la última modificación */
     @Column(name = "fecha_modificacion")
     private LocalDateTime fechaModificacion;
+
+    /** Equipo requerido para realizar el ejercicio */
+    @Column(name = "equipo_requerido", length = 100)
+    private String equipoRequerido;
 }

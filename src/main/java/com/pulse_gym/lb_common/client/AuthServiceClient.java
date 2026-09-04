@@ -1,5 +1,10 @@
 package com.pulse_gym.lb_common.client;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -8,9 +13,11 @@ import com.pulse_gym.lb_common.dto.AuthUserDTO;
 import com.pulse_gym.lb_common.enums.EnumRol;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class AuthServiceClient {
 
     /** RestTemplate para llamar a auth-service */
@@ -74,5 +81,29 @@ public class AuthServiceClient {
             System.err.println("Error al obtener usuario para ID " + id + ": " + e.getMessage());
         }
         return null;
+    }
+
+    /**
+     * Obtiene los IDs de usuarios que tienen los roles especificados
+     * 
+     * @param roles Lista de roles (ej: ["ADMINISTRADOR", "RECEPCIONISTA", "ENTRENADOR"])
+     * @return Lista de IDs de usuarios
+     */
+    public List<Long> obtenerIdsUsuariosPorRoles(List<String> roles) {
+        if (roles == null || roles.isEmpty()) {
+            return new ArrayList<>();
+        }
+        try {
+            String rolesParam = String.join(",", roles);
+            ResponseEntity<List<Long>> response = restTemplate.exchange(
+                    authServiceUrl + "/api/internal/users/ids-by-roles?roles=" + rolesParam,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<Long>>() {});
+            return response.getBody() != null ? response.getBody() : new ArrayList<>();
+        } catch (Exception e) {
+            log.error("Error al obtener IDs de usuarios por roles {}: {}", roles, e.getMessage());
+            return new ArrayList<>();
+        }
     }
 }

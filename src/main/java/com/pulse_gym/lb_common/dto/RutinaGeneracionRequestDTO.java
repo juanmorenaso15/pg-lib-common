@@ -3,14 +3,12 @@ package com.pulse_gym.lb_common.dto;
 import java.util.List;
 
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class RutinaGeneracionRequestDTO {
 
     /** ID del socio al que se generará la rutina */
-    @NotNull(message = "El ID del socio es obligatorio")
     private Long idSocio;
 
     /** Días por semana para la rutina */

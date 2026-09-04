@@ -60,4 +60,8 @@ public class DetalleRutinaResponseDTO {
 
     /** Usuario que modificó el detalle */
     private String modificadoPor;
+
+    /** Equipo requerido para realizar el ejercicio */
+    @JsonProperty("equipoRequerido")
+    private String equipoRequerido;
 }
