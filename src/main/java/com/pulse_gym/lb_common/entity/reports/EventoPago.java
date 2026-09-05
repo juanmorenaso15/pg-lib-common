@@ -57,4 +57,8 @@ public class EventoPago {
      */
     @Column(name = "metodo_pago")
     private String metodoPago;
+
+    /** Indica si el evento de pago ha sido anulado  */
+    @Column(name = "anulado")
+    private Boolean anulado = false;
 }
