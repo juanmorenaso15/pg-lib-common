@@ -7,6 +7,9 @@ public class PaymentSummaryDTO {
     /** Total de ingresos del mes actual */
     private Double ingresosMes;
     
+    /** Total de ingresos del mes anterior */
+    private Double ingresosMesAnterior;
+    
     /** Cantidad de pagos realizados este mes */
     private Integer pagosEsteMes;
     
