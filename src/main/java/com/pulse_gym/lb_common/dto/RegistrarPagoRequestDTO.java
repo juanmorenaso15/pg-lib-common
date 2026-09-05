@@ -26,4 +26,7 @@ public class RegistrarPagoRequestDTO {
 
     /** Observaciones adicionales sobre el pago (opcional) */
     private String observaciones;
+
+    /** Cantidad de días que se desea agregar a la membresía (opcional) */
+    private Integer cantidadDias;
 }
