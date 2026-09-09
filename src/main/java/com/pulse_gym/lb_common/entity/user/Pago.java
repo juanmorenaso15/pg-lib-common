@@ -18,6 +18,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import lombok.Data;
 
 @Entity
@@ -78,6 +79,23 @@ public class Pago {
     @Enumerated(EnumType.STRING)
     @Column(name = "estado")
     private EnumEstadoPago estado;
+
+    /** ID de la preferencia en MercadoPago */
+    @Column(name = "preference_id")
+    private String preferenceId;
+
+    /**
+     * ID del pago real en MercadoPago, una vez aprobado/rechazado (viene de la API
+     * de Payments)
+     */
+    @Column(name = "payment_id_mp")
+    private String paymentIdMp;
+
+    /**
+     * Control de concurrencia optimista para evitar doble procesamiento del webhook
+     */
+    @Version 
+    private Long version;
 
     /**
      * Asigna automáticamente la fecha actual si no se especifica antes de persistir
