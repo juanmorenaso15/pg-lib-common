@@ -55,4 +55,7 @@ public class PagoResponseDTO {
 
     /** Fecha y hora en que se anuló el pago */
     private LocalDateTime fechaAnulacion;
+
+    /** Estado actual del pago (PENDIENTE, APROBADO, RECHAZADO, ANULADO) */
+    private String estado;
 }
