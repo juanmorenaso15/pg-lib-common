@@ -3,6 +3,8 @@ package com.pulse_gym.lb_common.dto;
 
 import java.math.BigDecimal;
 
+import com.pulse_gym.lb_common.enums.EnumMetodoPago;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Min;
@@ -48,4 +50,7 @@ public class TokenizedPaymentRequestDTO {
 
     /** Cantidad de días a sumar, opcional (para membresías flexibles) */
     private Integer cantidadDias;
+
+    /** Método de pago seleccionado explícitamente en la interfaz (TARJETA_CREDITO / TARJETA_DEBITO) */
+    private EnumMetodoPago metodoPago;
 }
