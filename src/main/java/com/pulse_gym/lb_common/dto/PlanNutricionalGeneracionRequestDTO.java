@@ -4,14 +4,12 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class PlanNutricionalGeneracionRequestDTO {
 
     /** ID del socio al que se generará el plan nutricional */
-    @NotNull(message = "El ID del socio es obligatorio")
     @JsonProperty("id_socio") 
     private Long idSocio;
 
