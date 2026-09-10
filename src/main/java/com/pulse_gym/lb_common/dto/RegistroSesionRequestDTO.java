@@ -8,10 +8,6 @@ import lombok.Data;
 @Data
 public class RegistroSesionRequestDTO {
 
-    /** ID del socio que realiza la sesión */
-    @NotNull(message = "El ID del socio es obligatorio")
-    private Long idSocio;
-
     /** ID de la rutina asociada (opcional) */
     private Long idRutina;
 

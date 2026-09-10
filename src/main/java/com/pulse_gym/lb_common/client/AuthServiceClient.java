@@ -106,4 +106,24 @@ public class AuthServiceClient {
             return new ArrayList<>();
         }
     }
+
+    /**
+     * Obtiene todos los usuarios desde auth-service
+     * 
+     * @return Lista de AuthUserDTO
+     */
+    public List<AuthUserDTO> obtenerTodosLosUsuarios() {
+        try {
+            ResponseEntity<List<AuthUserDTO>> response = restTemplate.exchange(
+                    authServiceUrl + "/api/internal/users/all",
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<AuthUserDTO>>() {});
+            return response.getBody() != null ? response.getBody() : new ArrayList<>();
+        } catch (Exception e) {
+            log.error("Error al obtener todos los usuarios desde auth: {}", e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
 }
