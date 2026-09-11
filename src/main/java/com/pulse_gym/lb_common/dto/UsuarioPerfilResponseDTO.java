@@ -86,6 +86,9 @@ public class UsuarioPerfilResponseDTO {
 
     /** ID de la sede asignada */
     private Integer idSede;
+    
+    /** Nombre de la sede asignada en lugar del ID */
+    private String nombreSede;
 
     /** ID del dispositivo biométrico */
     private String biometricDeviceId;

@@ -1,9 +1,11 @@
 package com.pulse_gym.lb_common.client;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,4 +60,7 @@ public interface EquipoClient {
      */
     @GetMapping("/api/equipos/por-estado")
     List<EquipoResponseDTO> obtenerEquiposPorEstado(@RequestParam("estado") String estado);
+
+        @GetMapping("/api/sedes/{id}")
+    Map<String, Object> obtenerSedePorId(@PathVariable("id") Long id);
 }
