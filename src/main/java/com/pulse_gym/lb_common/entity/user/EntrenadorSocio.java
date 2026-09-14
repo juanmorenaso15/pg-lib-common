@@ -43,9 +43,14 @@ public class EntrenadorSocio {
     @Column(name = "activa")
     private Boolean activa = true;
 
-    /** Establece la fecha de asignación antes de persistir */
+    /** Establece valores por defecto antes de persistir */
     @PrePersist
     protected void onCreate() {
-        fechaAsignacion = LocalDateTime.now();
+        if (fechaAsignacion == null) {
+            fechaAsignacion = LocalDateTime.now();
+        }
+        if (activa == null) {
+            activa = true;
+        }
     }
 }

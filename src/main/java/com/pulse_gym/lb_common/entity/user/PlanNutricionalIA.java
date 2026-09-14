@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -84,6 +85,7 @@ public class PlanNutricionalIA {
     @Column(name = "explicacion_ia", columnDefinition = "TEXT")
     private String explicacionIA;
 
+    /** Usuario o proceso que modificó el plan */
     @Column(name = "modificado_por", length = 255)
     private String modificadoPor;
 
@@ -95,9 +97,17 @@ public class PlanNutricionalIA {
     @Column(name = "motivo_modificacion", columnDefinition = "TEXT")
     private String motivoModificacion;
 
-    /** Establece la fecha de generación antes de persistir */
+    /** Establece la fecha de generación antes de persistir si viene vacía */
     @PrePersist
     protected void onCreate() {
-        fechaGeneracion = LocalDateTime.now();
+        if (fechaGeneracion == null) {
+            fechaGeneracion = LocalDateTime.now();
+        }
+    }
+
+    /** Actualiza la fecha de modificación automáticamente antes de actualizar en BD */
+    @PreUpdate
+    protected void onUpdate() {
+        fechaModificacion = LocalDateTime.now();
     }
 }

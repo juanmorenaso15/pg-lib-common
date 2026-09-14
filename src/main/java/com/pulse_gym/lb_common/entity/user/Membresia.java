@@ -42,18 +42,18 @@ public class Membresia {
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad = 1;
 
-    /** El tipo de duración */
+    /** El tipo de duración (varchar 20) */
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_duracion", nullable = false)
+    @Column(name = "tipo_duracion", nullable = false, length = 20)
     private EnumTipoDuracion tipoDuracion;
 
     /** Indica si la membresía incluye IA */
     @Column(name = "incluye_ia", nullable = false)
-    private Boolean incluyeIA;
+    private Boolean incluyeIA = false;
 
     /** Indica si la membresía es flexible */
     @Column(name = "es_flexible", nullable = false)
-    private Boolean esFlexible;
+    private Boolean esFlexible = false;
 
     /** El precio por día */
     @Column(name = "precio_por_dia", precision = 10, scale = 2)
@@ -95,7 +95,7 @@ public class Membresia {
         int diasTotales = tipoDuracion.calcularDiasTotales(cantidad != null ? cantidad : 1);
         BigDecimal precioBase = precioPorDia.multiply(BigDecimal.valueOf(diasTotales));
 
-        if (incluyeIA) {
+        if (Boolean.TRUE.equals(incluyeIA)) {
             if (tipoDuracion == EnumTipoDuracion.ANUAL) {
                 precioBase = precioBase.add(PRECIO_IA_FIJO_ANUAL);
             } else {
@@ -112,6 +112,6 @@ public class Membresia {
      * @return La descripción de la duración
      */
     public String getDuracionDescripcion() {
-        return cantidad + " " + tipoDuracion.getNombre();
+        return cantidad + " " + (tipoDuracion != null ? tipoDuracion.getNombre() : "");
     }
 }
