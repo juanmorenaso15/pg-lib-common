@@ -51,14 +51,14 @@ public class UsuarioPerfil {
     @Column(name = "apellido", nullable = false, length = 100)
     private String apellido;
 
-    /** Estado del usuario (ACTIVO, INACTIVO, SUSPENDIDO) */
+    /** Estado del usuario (ACTIVO, INACTIVO, etc.) */
     @Enumerated(EnumType.STRING)
-    @Column(name = "estado", nullable = false)
+    @Column(name = "estado", nullable = false, length = 20)
     private EnumEstadoUsuario estado = EnumEstadoUsuario.ACTIVO;
 
-    /** Sexo del usuario (MASCULINO, FEMENINO, OTRO) */
+    /** Sexo del usuario (MASCULINO, FEMENINO) */
     @Enumerated(EnumType.STRING)
-    @Column(name = "sexo")
+    @Column(name = "sexo", length = 255)
     private EnumSexo sexo;
 
     /** Teléfono de contacto */
@@ -74,28 +74,28 @@ public class UsuarioPerfil {
     private String fotoUrl;
 
     /** Fecha de contratación (para personal) */
-    @Column(name = "fecha_contratacion", nullable = false)
+    @Column(name = "fecha_contratacion")
     private LocalDate fechaContratacion;
 
     /** Especialidad del entrenador */
-    @Column(name = "especialidad", nullable = false, length = 100)
+    @Column(name = "especialidad", length = 100)
     private String especialidad;
 
     /** Años de experiencia (para entrenador) */
-    @Column(name = "anos_experiencia", nullable = false)
+    @Column(name = "anos_experiencia")
     private Short anosExperiencia;
 
     /** Horario de disponibilidad (para entrenador) */
-    @Column(name = "horario_disponibilidad", nullable = false, length = 255)
+    @Column(name = "horario_disponibilidad", length = 255)
     private String horarioDisponibilidad;
 
     /** Tarifa por hora (para entrenador) */
-    @Column(name = "tarifa_hora", nullable = false, precision = 10, scale = 2)
+    @Column(name = "tarifa_hora", precision = 10, scale = 2)
     private BigDecimal tarifaHora;
 
     /** Turno de trabajo (para recepcionista) */
     @Enumerated(EnumType.STRING)
-    @Column(name = "turno", nullable = false)
+    @Column(name = "turno", length = 20)
     private EnumTurno turno;
 
     /** Fecha de nacimiento del usuario */
@@ -103,20 +103,20 @@ public class UsuarioPerfil {
     private LocalDate fechaNacimiento;
 
     /** Nombre del contacto de emergencia */
-    @Column(name = "contacto_emergencia_nombre", nullable = false, length = 100)
+    @Column(name = "contacto_emergencia_nombre", length = 100)
     private String contactoEmergenciaNombre;
 
     /** Teléfono del contacto de emergencia */
-    @Column(name = "contacto_emergencia_telefono", nullable = false, length = 20)
+    @Column(name = "contacto_emergencia_telefono", length = 20)
     private String contactoEmergenciaTelefono;
 
     /** Objetivo principal del socio */
-    @Column(name = "objetivo_principal", nullable = false, length = 255)
+    @Column(name = "objetivo_principal", length = 255)
     private String objetivoPrincipal;
 
     /** Nivel de experiencia del socio */
     @Enumerated(EnumType.STRING)
-    @Column(name = "nivel_experiencia", nullable = false)
+    @Column(name = "nivel_experiencia", length = 20)
     private EnumNivelExperiencia nivelExperiencia;
 
     /** Fecha de registro del usuario */
@@ -134,7 +134,9 @@ public class UsuarioPerfil {
     /** Establece la fecha de registro antes de persistir */
     @PrePersist
     protected void onCreate() {
-        fechaRegistro = LocalDateTime.now();
+        if (fechaRegistro == null) {
+            fechaRegistro = LocalDateTime.now();
+        }
     }
 
     /** Lista de documentos legales del usuario */
@@ -143,21 +145,11 @@ public class UsuarioPerfil {
     @ToString.Exclude
     private List<DocumentoLegal> documentosLegales = new ArrayList<>();
 
-    /**
-     * Agrega un documento legal al usuario
-     * 
-     * @param documento Documento a agregar
-     */
     public void addDocumentoLegal(DocumentoLegal documento) {
         documentosLegales.add(documento);
         documento.setUsuario(this);
     }
 
-    /**
-     * Elimina un documento legal del usuario
-     * 
-     * @param documento Documento a eliminar
-     */
     public void removeDocumentoLegal(DocumentoLegal documento) {
         documentosLegales.remove(documento);
         documento.setUsuario(null);
@@ -169,21 +161,11 @@ public class UsuarioPerfil {
     @ToString.Exclude
     private List<Certificacion> certificaciones = new ArrayList<>();
 
-    /**
-     * Agrega una certificación al entrenador
-     * 
-     * @param certificacion Certificación a agregar
-     */
     public void addCertificacion(Certificacion certificacion) {
         certificaciones.add(certificacion);
         certificacion.setEntrenador(this);
     }
 
-    /**
-     * Elimina una certificación del entrenador
-     * 
-     * @param certificacion Certificación a eliminar
-     */
     public void removeCertificacion(Certificacion certificacion) {
         certificaciones.remove(certificacion);
         certificacion.setEntrenador(null);
@@ -207,21 +189,11 @@ public class UsuarioPerfil {
     @ToString.Exclude
     private List<HistorialFisico> medicionesRegistradas = new ArrayList<>();
 
-    /**
-     * Agrega un registro al historial físico del socio
-     * 
-     * @param historial Registro a agregar
-     */
     public void addHistorialFisico(HistorialFisico historial) {
         historialFisico.add(historial);
         historial.setSocio(this);
     }
 
-    /**
-     * Elimina un registro del historial físico del socio
-     * 
-     * @param historial Registro a eliminar
-     */
     public void removeHistorialFisico(HistorialFisico historial) {
         historialFisico.remove(historial);
         historial.setSocio(null);
@@ -233,11 +205,6 @@ public class UsuarioPerfil {
     @ToString.Exclude
     private List<SocioMembresia> membresiaAsignadas = new ArrayList<>();
 
-    /**
-     * Obtiene la membresía activa del socio
-     * 
-     * @return Membresía activa o null si no tiene
-     */
     public SocioMembresia getMembresiaActiva() {
         if (membresiaAsignadas == null)
             return null;
@@ -247,21 +214,11 @@ public class UsuarioPerfil {
                 .orElse(null);
     }
 
-    /**
-     * Agrega una membresía al socio
-     * 
-     * @param socioMembresia Membresía a agregar
-     */
     public void addMembresiaAsignadav(SocioMembresia socioMembresia) {
         membresiaAsignadas.add(socioMembresia);
         socioMembresia.setSocio(this);
     }
 
-    /**
-     * Elimina una membresía del socio
-     * 
-     * @param socioMembresia Membresía a eliminar
-     */
     public void removeMembresiaAsignada(SocioMembresia socioMembresia) {
         membresiaAsignadas.remove(socioMembresia);
         socioMembresia.setSocio(null);

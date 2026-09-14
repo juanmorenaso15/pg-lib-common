@@ -43,7 +43,7 @@ public class SesionEntrenamiento {
     @JoinColumn(name = "fk_id_rutina_ia")
     private RutinaIA rutina;
 
-    /** Fecha y hora de la sesión */
+    /** Fecha y hora de la sesión (timestamp sin zona horaria) */
     @Column(name = "fecha_sesion", nullable = false)
     private LocalDateTime fechaSesion;
 
@@ -51,10 +51,10 @@ public class SesionEntrenamiento {
     @Column(name = "duracion_minutos", nullable = false)
     private Integer duracionMinutos;
 
-    /** Estado de la sesión (ej: COMPLETADA, PENDIENTE, CANCELADA) */
+    /** Estado de la sesión (COMPLETADA, PARCIAL, NO_REALIZADA) */
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false, length = 20)
-    private EnumEstadoSesion estado;
+    private EnumEstadoSesion estado = EnumEstadoSesion.COMPLETADA;
 
     /** Observaciones adicionales sobre la sesión */
     @Column(name = "observaciones", columnDefinition = "TEXT")
@@ -64,9 +64,11 @@ public class SesionEntrenamiento {
     @OneToMany(mappedBy = "sesion", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetalleSesionEjercicio> detalles = new ArrayList<>();
 
-    /** Establece la fecha de la sesión antes de persistir */
+    /** Establece la fecha de la sesión antes de persistir si viene vacía */
     @PrePersist
     protected void onCreate() {
-        fechaSesion = LocalDateTime.now();
+        if (fechaSesion == null) {
+            fechaSesion = LocalDateTime.now();
+        }
     }
 }

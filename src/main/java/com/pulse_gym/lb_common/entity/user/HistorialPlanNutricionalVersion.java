@@ -55,8 +55,11 @@ public class HistorialPlanNutricionalVersion {
     @Column(name = "motivo", length = 255)
     private String motivo;
 
+    /** Establece la fecha de modificación antes de persistir si viene vacía */
     @PrePersist
     protected void onCreate() {
-        fechaModificacion = LocalDateTime.now();
+        if (fechaModificacion == null) {
+            fechaModificacion = LocalDateTime.now();
+        }
     }
 }

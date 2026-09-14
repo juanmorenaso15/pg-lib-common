@@ -47,7 +47,7 @@ public class Pago {
 
     /** Método de pago utilizado (efectivo, transferencia, tarjeta, etc.) */
     @Enumerated(EnumType.STRING)
-    @Column(name = "metodo_pago", nullable = false)
+    @Column(name = "metodo_pago", nullable = false, length = 50)
     private EnumMetodoPago metodoPago;
 
     /** Número de comprobante o referencia del pago */
@@ -77,24 +77,25 @@ public class Pago {
 
     /** Estado del pago (PENDIENTE, APROBADO, RECHAZADO, ANULADO) */
     @Enumerated(EnumType.STRING)
-    @Column(name = "estado")
+    @Column(name = "estado", length = 20)
     private EnumEstadoPago estado;
 
     /** ID de la preferencia en MercadoPago */
-    @Column(name = "preference_id")
+    @Column(name = "preference_id", length = 255)
     private String preferenceId;
 
     /**
      * ID del pago real en MercadoPago, una vez aprobado/rechazado (viene de la API
      * de Payments)
      */
-    @Column(name = "payment_id_mp")
+    @Column(name = "payment_id_mp", length = 255)
     private String paymentIdMp;
 
     /**
      * Control de concurrencia optimista para evitar doble procesamiento del webhook
      */
-    @Version 
+    @Version
+    @Column(name = "version")
     private Long version;
 
     /**
@@ -104,6 +105,9 @@ public class Pago {
     protected void onCreate() {
         if (fechaPago == null) {
             fechaPago = LocalDateTime.now();
+        }
+        if (anulado == null) {
+            anulado = false;
         }
     }
 

@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -21,7 +22,7 @@ import lombok.Data;
 public class EventoPago {
     
     /**
-     * Identidficador unico del evento
+     * Identificador único del evento de pago
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,15 +30,15 @@ public class EventoPago {
     private Long idEventoPago;
 
     /**
-     * Identidicador del socio
+     * Identificador del socio (varchar 255)
      */
-    @Column(name = "socio_identificador")
+    @Column(name = "socio_identificador", length = 255)
     private String socioIdentificador;
 
     /**
-     * Monto pagado
+     * Monto pagado (numeric 38,2)
      */
-    @Column(name = "monto")
+    @Column(name = "monto", precision = 38, scale = 2)
     private BigDecimal monto;
 
     /**
@@ -47,18 +48,30 @@ public class EventoPago {
     private LocalDateTime fechaPago;
 
     /**
-     * Tipo de membresia
+     * Tipo de membresía asociada (varchar 255)
      */
-    @Column(name = "tipo_membresia")
+    @Column(name = "tipo_membresia", length = 255)
     private String tipoMembresia;
 
     /**
-     * Fecha de registro del sistema
+     * Método de pago utilizado (varchar 255)
      */
-    @Column(name = "metodo_pago")
+    @Column(name = "metodo_pago", length = 255)
     private String metodoPago;
 
-    /** Indica si el evento de pago ha sido anulado  */
+    /** 
+     * Indica si el evento de pago ha sido anulado  
+     */
     @Column(name = "anulado")
     private Boolean anulado = false;
+
+    /**
+     * Asegura valores por defecto antes de persistir
+     */
+    @PrePersist
+    protected void onCreate() {
+        if (anulado == null) {
+            anulado = false;
+        }
+    }
 }

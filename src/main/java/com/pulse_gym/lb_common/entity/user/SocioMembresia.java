@@ -42,8 +42,11 @@ public class SocioMembresia {
     @JoinColumn(name = "fk_id_membresia", nullable = false)
     private Membresia membresia;
 
-    /** Precio real pagado/calculado para la asignación de la membresía */
-    @Column(name = "precio_real")
+    /**
+     * Precio real pagado/calculado para la asignación de la membresía (numeric
+     * 38,2)
+     */
+    @Column(name = "precio_real", precision = 38, scale = 2)
     private BigDecimal precioReal;
 
     /** Cantidad de días asignados (en caso de membresía flexible) */
@@ -58,9 +61,9 @@ public class SocioMembresia {
     @Column(name = "fecha_vencimiento", nullable = false)
     private LocalDate fechaVencimiento;
 
-    /** Estado actual de la membresía */
+    /** Estado actual de la membresía (varchar 20) */
     @Enumerated(EnumType.STRING)
-    @Column(name = "estado", nullable = false)
+    @Column(name = "estado", nullable = false, length = 20)
     private EnumEstadoSocioMembresia estado = EnumEstadoSocioMembresia.ACTIVA;
 
     /** Fecha de creación del registro */
@@ -71,14 +74,16 @@ public class SocioMembresia {
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
 
-    /** Observaciones sobre la asignación/cancelación */
+    /** Observaciones sobre la asignación/cancelación (TEXT) */
     @Column(name = "observaciones", columnDefinition = "TEXT")
     private String observaciones;
 
     /** Método que se ejecuta antes de persistir el registro */
     @PrePersist
     protected void onCreate() {
-        fechaCreacion = LocalDateTime.now();
+        if (fechaCreacion == null) {
+            fechaCreacion = LocalDateTime.now();
+        }
         fechaActualizacion = LocalDateTime.now();
     }
 
@@ -90,14 +95,19 @@ public class SocioMembresia {
 
     /**
      * Verifica si la membresía está vencida
+     * 
      * @return true si la fecha de vencimiento es anterior a hoy
      */
     public boolean isVencida() {
+        if (fechaVencimiento == null) {
+            return false;
+        }
         return LocalDate.now().isAfter(fechaVencimiento);
     }
 
     /**
      * Verifica si la membresía está activa
+     * 
      * @return true si está ACTIVA y no está vencida
      */
     public boolean isActiva() {
@@ -106,10 +116,11 @@ public class SocioMembresia {
 
     /**
      * Calcula los días restantes de la membresía
+     * 
      * @return días restantes o 0 si está vencida
      */
     public long getDiasRestantes() {
-        if (isVencida()) {
+        if (isVencida() || fechaVencimiento == null) {
             return 0;
         }
         return java.time.temporal.ChronoUnit.DAYS.between(LocalDate.now(), fechaVencimiento);
