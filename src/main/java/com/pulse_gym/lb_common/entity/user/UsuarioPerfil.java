@@ -3,6 +3,8 @@ package com.pulse_gym.lb_common.entity.user;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,7 +137,7 @@ public class UsuarioPerfil {
     @PrePersist
     protected void onCreate() {
         if (fechaRegistro == null) {
-            fechaRegistro = LocalDateTime.now();
+            fechaRegistro = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
         }
     }
 

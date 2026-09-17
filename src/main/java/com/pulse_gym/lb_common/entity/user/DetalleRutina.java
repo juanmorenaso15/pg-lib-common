@@ -2,6 +2,8 @@ package com.pulse_gym.lb_common.entity.user;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +13,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -83,4 +87,15 @@ public class DetalleRutina {
     @Column(name = "semana")
     private Integer semana;
 
+    @PrePersist
+    protected void onCreate() {
+        if (fechaModificacion == null) {
+            fechaModificacion = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+        }
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        fechaModificacion = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+    }
 }

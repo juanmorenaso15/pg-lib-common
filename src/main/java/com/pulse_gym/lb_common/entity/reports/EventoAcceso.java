@@ -3,6 +3,8 @@ package com.pulse_gym.lb_common.entity.reports;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import com.pulse_gym.lb_common.enums.EnumTipoAcceso;
 
@@ -14,14 +16,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
 @Data
 @Table(name = "evento_acceso", indexes = {
-    @Index(name = "idx_evento_acceso_fecha", columnList = "fecha_registro"),
-    @Index(name = "idx_evento_acceso_socio", columnList = "socio_identificacion")
+        @Index(name = "idx_evento_acceso_fecha", columnList = "fecha_registro"),
+        @Index(name = "idx_evento_acceso_socio", columnList = "socio_identificacion")
 })
 public class EventoAcceso {
 
@@ -32,7 +35,7 @@ public class EventoAcceso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_evento_acceso")
     private Long idEventoAcesso;
-    
+
     /**
      * Identificador del socio
      */
@@ -51,6 +54,12 @@ public class EventoAcceso {
      */
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
-    
+
+    @PrePersist
+    protected void onCreate() {
+        if (fechaRegistro == null) {
+            fechaRegistro = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+        }
+    }
 
 }

@@ -1,6 +1,8 @@
 package com.pulse_gym.lb_common.entity.user;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -59,7 +61,7 @@ public class HistorialPlanNutricionalVersion {
     @PrePersist
     protected void onCreate() {
         if (fechaModificacion == null) {
-            fechaModificacion = LocalDateTime.now();
+            fechaModificacion = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
         }
     }
 }

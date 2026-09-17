@@ -2,6 +2,8 @@ package com.pulse_gym.lb_common.entity.user;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import com.pulse_gym.lb_common.enums.EnumEstadoPago;
 import com.pulse_gym.lb_common.enums.EnumMetodoPago;
@@ -104,7 +106,7 @@ public class Pago {
     @PrePersist
     protected void onCreate() {
         if (fechaPago == null) {
-            fechaPago = LocalDateTime.now();
+            fechaPago = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
         }
         if (anulado == null) {
             anulado = false;

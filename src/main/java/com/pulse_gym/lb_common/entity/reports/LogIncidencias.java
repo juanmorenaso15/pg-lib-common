@@ -3,6 +3,8 @@ package com.pulse_gym.lb_common.entity.reports;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "log_incidencias")
@@ -39,5 +41,12 @@ public class LogIncidencias {
      * Fecha y hora de la incidencia (se asigna automáticamente)
      */
     @Column(name = "fecha_incidencia", nullable = false, updatable = false)
-    private LocalDateTime fechaIncidencia = LocalDateTime.now();
+    private LocalDateTime fechaIncidencia = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+
+    @PrePersist
+    protected void onCreate() {
+        if (fechaIncidencia == null) {
+            fechaIncidencia = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+        }
+    }
 }

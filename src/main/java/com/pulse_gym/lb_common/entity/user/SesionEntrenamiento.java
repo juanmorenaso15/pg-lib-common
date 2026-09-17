@@ -1,6 +1,8 @@
 package com.pulse_gym.lb_common.entity.user;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +70,7 @@ public class SesionEntrenamiento {
     @PrePersist
     protected void onCreate() {
         if (fechaSesion == null) {
-            fechaSesion = LocalDateTime.now();
+            fechaSesion = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
         }
     }
 }

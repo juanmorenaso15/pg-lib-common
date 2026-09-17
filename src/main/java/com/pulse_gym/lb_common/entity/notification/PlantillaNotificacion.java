@@ -1,6 +1,8 @@
 package com.pulse_gym.lb_common.entity.notification;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +20,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -39,7 +42,6 @@ public class PlantillaNotificacion {
      */
     @Column(name = "nombre", nullable = false)
     private String nombre;
-
 
     /** Titulo de la notificacion */
     @Column(name = "titulo")
@@ -97,4 +99,10 @@ public class PlantillaNotificacion {
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDateTime fechaCreacion;
 
+    @PrePersist
+    protected void onCreate() {
+        if (fechaCreacion == null) {
+            fechaCreacion = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+        }
+    }
 }

@@ -1,6 +1,8 @@
 package com.pulse_gym.lb_common.entity.notification;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import com.pulse_gym.lb_common.enums.EnumCanalNotificacion;
 import com.pulse_gym.lb_common.enums.EnumEventoAsociado;
@@ -12,6 +14,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -134,11 +138,23 @@ public class PlantillaDisenoEmail {
      * Fecha de creación del diseño
      */
     @Column(name = "fecha_creacion", nullable = false)
-    private LocalDateTime fechaCreacion = LocalDateTime.now();
+    private LocalDateTime fechaCreacion = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
 
     /**
      * Fecha de última modificación
      */
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
+
+    @PrePersist
+    protected void onCreate() {
+        if (fechaCreacion == null) {
+            fechaCreacion = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+        }
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        fechaActualizacion = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+    }
 }

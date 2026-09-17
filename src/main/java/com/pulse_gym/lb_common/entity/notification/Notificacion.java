@@ -1,6 +1,8 @@
 package com.pulse_gym.lb_common.entity.notification;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import com.pulse_gym.lb_common.enums.EnumEstadoNotificacion;
 
@@ -13,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -20,7 +23,7 @@ import lombok.Data;
 @Entity
 @Data
 public class Notificacion {
-    
+
     /**
      * Identificador de la notificacion
      */
@@ -66,4 +69,11 @@ public class Notificacion {
      */
     @Column(name = "fecha_envio", nullable = false)
     private LocalDateTime fechaEnvio;
+
+    @PrePersist
+    protected void onCreate() {
+        if (fechaEnvio == null) {
+            fechaEnvio = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+        }
+    }
 }

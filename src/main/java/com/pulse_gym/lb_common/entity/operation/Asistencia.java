@@ -1,6 +1,8 @@
 package com.pulse_gym.lb_common.entity.operation;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import com.pulse_gym.lb_common.enums.EnumEstadoAcceso;
 import com.pulse_gym.lb_common.enums.EnumTipoAcceso;
@@ -14,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -81,4 +84,11 @@ public class Asistencia {
      */
     @Column(name = "dispositivo_id", length = 100)
     private String dispositivoId;
+
+@PrePersist
+    protected void onCreate() {
+        if (fechaHoraEntrada == null) {
+            fechaHoraEntrada = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+        }
+    }
 }

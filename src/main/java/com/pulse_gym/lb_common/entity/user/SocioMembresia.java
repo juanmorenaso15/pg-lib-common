@@ -3,6 +3,8 @@ package com.pulse_gym.lb_common.entity.user;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import com.pulse_gym.lb_common.enums.EnumEstadoSocioMembresia;
 
@@ -82,15 +84,14 @@ public class SocioMembresia {
     @PrePersist
     protected void onCreate() {
         if (fechaCreacion == null) {
-            fechaCreacion = LocalDateTime.now();
+            fechaCreacion = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
         }
-        fechaActualizacion = LocalDateTime.now();
+        fechaActualizacion = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
     }
 
-    /** Método que se ejecuta antes de actualizar el registro */
     @PreUpdate
     protected void onUpdate() {
-        fechaActualizacion = LocalDateTime.now();
+        fechaActualizacion = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
     }
 
     /**
@@ -102,7 +103,8 @@ public class SocioMembresia {
         if (fechaVencimiento == null) {
             return false;
         }
-        return LocalDate.now().isAfter(fechaVencimiento);
+        LocalDate hoyColombia = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia().toLocalDate();
+        return hoyColombia.isAfter(fechaVencimiento);
     }
 
     /**
@@ -123,6 +125,7 @@ public class SocioMembresia {
         if (isVencida() || fechaVencimiento == null) {
             return 0;
         }
-        return java.time.temporal.ChronoUnit.DAYS.between(LocalDate.now(), fechaVencimiento);
+        LocalDate hoyColombia = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia().toLocalDate();
+        return java.time.temporal.ChronoUnit.DAYS.between(hoyColombia, fechaVencimiento);
     }
 }

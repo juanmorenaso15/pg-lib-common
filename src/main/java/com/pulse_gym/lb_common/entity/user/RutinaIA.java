@@ -1,6 +1,8 @@
 package com.pulse_gym.lb_common.entity.user;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +84,9 @@ public class RutinaIA {
     /** Establece la fecha de generación antes de persistir */
     @PrePersist
     protected void onCreate() {
-        fechaGeneracion = LocalDateTime.now();
+        if (fechaGeneracion == null) {
+            fechaGeneracion = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+        }
     }
 
     /**
