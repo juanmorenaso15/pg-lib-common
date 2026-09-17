@@ -1,6 +1,8 @@
 package com.pulse_gym.lb_common.entity.user;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import com.pulse_gym.lb_common.enums.EnumEstadoDocumentoLegal;
 import com.pulse_gym.lb_common.enums.EnumTipoDocumentoLegal;
@@ -56,6 +58,8 @@ public class DocumentoLegal {
     /** La fecha de creación es obligatoria */
     @PrePersist
     protected void onCreate() {
-        fechaFirma = LocalDateTime.now();
+        if (fechaFirma == null) {
+            fechaFirma = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+        }
     }
 }

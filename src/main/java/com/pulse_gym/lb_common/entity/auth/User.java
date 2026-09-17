@@ -1,6 +1,8 @@
 package com.pulse_gym.lb_common.entity.auth;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,16 +101,13 @@ public class User {
     public boolean isLocked() {
         if (lockTime == null)
             return false;
-        return lockTime.plusSeconds(30).isAfter(LocalDateTime.now());
+        return lockTime.plusSeconds(30).isAfter(com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia());
     }
 
-    /**
-     * Incrementa el número de intentos fallidos de inicio de sesión.
-     */
     public void incrementFailedAttempts() {
         this.failedAttempts = (this.failedAttempts == null ? 0 : this.failedAttempts) + 1;
         if (this.failedAttempts >= 3) {
-            this.lockTime = LocalDateTime.now();
+            this.lockTime = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
         }
     }
 

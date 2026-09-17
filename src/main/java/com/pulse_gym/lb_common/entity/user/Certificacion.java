@@ -1,6 +1,8 @@
 package com.pulse_gym.lb_common.entity.user;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,6 +47,8 @@ public class Certificacion {
     /** Descripción opcional de la certificación */
     @PrePersist
     protected void onCreate() {
-        fechaSubida = LocalDateTime.now();
+        if (fechaSubida == null) {
+            fechaSubida = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+        }
     }
 }

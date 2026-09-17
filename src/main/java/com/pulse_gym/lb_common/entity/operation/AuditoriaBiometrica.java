@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "auditoria_biometrica")
@@ -22,7 +24,7 @@ public class AuditoriaBiometrica {
     private Long idUsuario;
 
     @Column(name = "hash_huella", length = 64)
-    private String hashHuella; 
+    private String hashHuella;
 
     @Column(name = "fecha_hora", nullable = false)
     private LocalDateTime fechaHora;
@@ -37,5 +39,12 @@ public class AuditoriaBiometrica {
     private Long idSede;
 
     @Column(name = "tipo_log", length = 20)
-    private String tipoLog = "HUELLA"; 
+    private String tipoLog = "HUELLA";
+
+    @PrePersist
+    protected void onCreate() {
+        if (fechaHora == null) {
+            fechaHora = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+        }
+    }
 }

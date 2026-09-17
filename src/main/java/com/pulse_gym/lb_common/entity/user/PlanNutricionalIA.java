@@ -2,6 +2,8 @@ package com.pulse_gym.lb_common.entity.user;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -101,13 +103,12 @@ public class PlanNutricionalIA {
     @PrePersist
     protected void onCreate() {
         if (fechaGeneracion == null) {
-            fechaGeneracion = LocalDateTime.now();
+            fechaGeneracion = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
         }
     }
 
-    /** Actualiza la fecha de modificación automáticamente antes de actualizar en BD */
     @PreUpdate
     protected void onUpdate() {
-        fechaModificacion = LocalDateTime.now();
+        fechaModificacion = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
     }
 }

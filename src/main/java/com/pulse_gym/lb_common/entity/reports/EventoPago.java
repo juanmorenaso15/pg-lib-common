@@ -2,6 +2,8 @@ package com.pulse_gym.lb_common.entity.reports;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,11 +18,11 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "evento_pago", indexes = {
-    @Index(name = "idx_evento_pago_fecha", columnList = "fecha_pago"),
-    @Index(name = "idx_evento_pago_socio", columnList = "socio_identificador")
+        @Index(name = "idx_evento_pago_fecha", columnList = "fecha_pago"),
+        @Index(name = "idx_evento_pago_socio", columnList = "socio_identificador")
 })
 public class EventoPago {
-    
+
     /**
      * Identificador único del evento de pago
      */
@@ -59,8 +61,8 @@ public class EventoPago {
     @Column(name = "metodo_pago", length = 255)
     private String metodoPago;
 
-    /** 
-     * Indica si el evento de pago ha sido anulado  
+    /**
+     * Indica si el evento de pago ha sido anulado
      */
     @Column(name = "anulado")
     private Boolean anulado = false;
@@ -70,6 +72,9 @@ public class EventoPago {
      */
     @PrePersist
     protected void onCreate() {
+        if (fechaPago == null) {
+            fechaPago = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+        }
         if (anulado == null) {
             anulado = false;
         }

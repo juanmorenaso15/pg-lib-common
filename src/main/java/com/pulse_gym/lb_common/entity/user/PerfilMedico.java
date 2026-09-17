@@ -2,6 +2,8 @@ package com.pulse_gym.lb_common.entity.user;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -74,7 +76,7 @@ public class PerfilMedico {
     @PrePersist
     @PreUpdate
     protected void onUpdate() {
-        fechaActualizacion = LocalDateTime.now();
+        fechaActualizacion = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
         if (activo == null) {
             activo = true;
         }

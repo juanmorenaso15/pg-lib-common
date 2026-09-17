@@ -5,17 +5,19 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import com.pulse_gym.lb_common.enums.EnumEstado;
 
 @Entity
 @Table(name = "evento_maquina", indexes = {
-    @Index(name = "idx_evento_maquina_fecha", columnList = "fecha_reporte"),
-    @Index(name = "idx_evento_maquina_nombre", columnList = "nombre_maquina")
+        @Index(name = "idx_evento_maquina_fecha", columnList = "fecha_reporte"),
+        @Index(name = "idx_evento_maquina_nombre", columnList = "nombre_maquina")
 })
 @Data
 public class EventoMaquina {
-    
+
     /**
      * Identificador único del evento de la máquina
      */
@@ -59,5 +61,12 @@ public class EventoMaquina {
      * Fecha de registro del evento en la base de datos
      */
     @Column(name = "fecha_registro", nullable = false, updatable = false)
-    private LocalDateTime fechaRegistro = LocalDateTime.now();
+    private LocalDateTime fechaRegistro = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+
+    @PrePersist
+    protected void onCreate() {
+        if (fechaRegistro == null) {
+            fechaRegistro = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia();
+        }
+    }
 }

@@ -97,7 +97,8 @@ public class SocioMembresiaResponseDTO {
             return;
         }
 
-        long dias = LocalDate.now().until(this.fechaVencimiento).getDays();
+        LocalDate hoyColombia = com.pulse_gym.lb_common.util.FechaUtils.ahoraColombia().toLocalDate();
+        long dias = hoyColombia.until(this.fechaVencimiento).getDays();
         this.diasRestantes = Math.max(0, dias);
 
         this.estaVencida = dias <= 0;

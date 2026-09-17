@@ -1,6 +1,8 @@
 package com.pulse_gym.lb_common.entity.auth;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -68,6 +70,7 @@ public class PasswordResetToken {
      * @return true si la fecha actual es posterior a la fecha de expiración
      */
     public boolean isExpired() {
-        return expiryDate != null && LocalDateTime.now().isAfter(expiryDate);
+        return expiryDate != null
+                && ZonedDateTime.now(ZoneId.of("America/Bogota")).toLocalDateTime().isAfter(expiryDate);
     }
 }

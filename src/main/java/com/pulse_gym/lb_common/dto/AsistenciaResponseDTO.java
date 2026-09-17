@@ -33,4 +33,7 @@ public class AsistenciaResponseDTO {
      * Motivo de denegación del acceso (si aplica)
      */
     private String motivoDenegacion;
+
+    private String nombre;
+    private String email;
 }
