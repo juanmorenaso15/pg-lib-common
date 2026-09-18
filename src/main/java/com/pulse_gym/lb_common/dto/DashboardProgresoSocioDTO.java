@@ -23,6 +23,9 @@ public class DashboardProgresoSocioDTO {
     /** Porcentaje de cumplimiento de la semana anterior */
     private Double porcentajeCumplimientoSemanaAnterior;
 
+    /** Días de la semana actual (1-7) donde SÍ hubo asistencia registrada */
+    private List<Integer> diasEntrenadosSemana;
+
     /** Lista de evolución por ejercicio */
     private List<EvolucionEjercicioDTO> evolucionEjercicios;
 
