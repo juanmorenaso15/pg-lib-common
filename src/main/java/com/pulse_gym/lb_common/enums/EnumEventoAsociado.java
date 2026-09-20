@@ -28,9 +28,14 @@ public enum EnumEventoAsociado {
     ACHIEVEMENT,
 
     /**
-     * Evento de notificacion para alerta de mantenimiento
+     * Evento de notificacion para alerta de mantenimiento (el equipo entro en mantenimiento)
      */
     MAINTENANCE_ALERT,
+
+    /**
+     * Evento de notificacion cuando se reporta una falla/daño en un equipo
+     */
+    EQUIPO_DANADO,
 
     /**
      * Evento de notificacion promocional
