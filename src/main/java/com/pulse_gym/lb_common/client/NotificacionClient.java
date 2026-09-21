@@ -4,6 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.pulse_gym.lb_common.dto.EnvioEventoMasivoDTO;
 import com.pulse_gym.lb_common.dto.EnvioEventoNotificacionDTO;
 import com.pulse_gym.lb_common.dto.VerificarPreferenciaRequestDTO;
 import com.pulse_gym.lb_common.dto.VerificarPreferenciaResponseDTO;
@@ -30,4 +31,15 @@ public interface NotificacionClient {
      */
     @PostMapping("/api/internal/notificaciones/enviar-evento")
     Map<String, Object> enviarPorEvento(@RequestBody EnvioEventoNotificacionDTO request);
+
+    /**
+     * Envia una notificacion a todos los usuarios del sistema que tengan un
+     * numero de telefono registrado (p.ej. avisos de equipos que aplican a
+     * todo el mundo, no a un usuario en particular)
+     *
+     * @param request Datos del evento masivo (evento, variablesAdicionales)
+     * @return Resultado del envio
+     */
+    @PostMapping("/api/internal/notificaciones/enviar-evento-masivo")
+    Map<String, Object> enviarPorEventoMasivo(@RequestBody EnvioEventoMasivoDTO request);
 }
