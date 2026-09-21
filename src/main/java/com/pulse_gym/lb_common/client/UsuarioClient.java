@@ -36,6 +36,14 @@ public interface UsuarioClient {
     List<UsuarioPerfilResponseDTO> obtenerTodosLosUsuarios(@RequestHeader(value = "X-User-Rol", required = false) String userRol);
 
     /**
+     * Obtiene todos los perfiles con telefono registrado, sin validacion de
+     * roles (uso interno entre microservicios: p.ej. para avisos de equipos
+     * que le interesan a todo el mundo, no a un usuario en particular).
+     */
+    @GetMapping("/api/internal/usuarios/con-telefono")
+    List<UsuarioPerfilResponseDTO> obtenerTodosConTelefonoInterno();
+
+    /**
      * Cambia el estado de un usuario (activo/inactivo) y sincroniza con el perfil del usuario.
      */
     @PutMapping("/api/internal/usuarios/email/estado")
