@@ -1,37 +1,32 @@
 package com.pulse_gym.lb_common.dto;
 
+import java.time.LocalDate;
 import lombok.Data;
 
 @Data
 public class EquipoResponseDTO {
-    /**
-     *  id del equipo
-     */
+    
     private Long idEquipo;
-
-    /**
-     * nombre del equipo
-     */
+    
     private String nombreEquipo;
+    private String nombre; 
 
-    /**
-     * descripcion del equipo
-     */
+    private String marca;
+    private String modelo;
+    private String numeroSerie;
+    private LocalDate fechaAdquisicion;
+    private LocalDate fechaGarantia;
+    private String ubicacion;
     private String descripcion;
 
-    /**
-     * estado del equipo
-     */
     private String estado;
+    private String urgenciaFalla;
+    private String descripcionFalla;
+    private String estadoReporte;
 
-    /**
-     * id de la sede a la que pertenece el equipo
-     */
     private Long idSede;
+    private String nombreSede;
 
-    /**
-     * id del proveedor del equipo
-     */
     private Long idProveedor;
-
+    private String nombreProveedor;
 }
