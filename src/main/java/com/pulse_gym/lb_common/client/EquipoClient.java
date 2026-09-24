@@ -36,11 +36,17 @@ public interface EquipoClient {
     Integer obtenerConteoPorEstado(@RequestParam("estado") String estado);
 
     /**
-     * Obtiene todos los equipos disponibles en el gimnasio
-     * 
+     * Obtiene todos los equipos disponibles en el gimnasio.
+     * Usa el endpoint INTERNO (/internos/todos), que devuelve la lista plana
+     * en formato EquipoResponseDTO. El endpoint público "/todos" devuelve un
+     * wrapper (success/message/count/data) y NO puede deserializarse como
+     * List<EquipoResponseDTO>, lo que hacía fallar esta llamada (excepción
+     * capturada en RutinaIAService, devolviendo lista de equipos vacía y
+     * forzando rutinas 100% de peso corporal para socios sin idSede).
+     *
      * @return Lista de equipos
      */
-    @GetMapping("/api/equipos/todos")
+    @GetMapping("/api/equipos/internos/todos")
     List<EquipoResponseDTO> obtenerTodosLosEquipos();
 
     /**
